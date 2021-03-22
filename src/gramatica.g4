@@ -15,18 +15,19 @@ RETURN: 'return';
 
 //constantes numericas
 CONSTENTERO: [+-]?([0-9]+|'$'[0-9A-F]+);
-CONSTREAL: [+-]?([0-9]+'.'[0-9]+|'$'[0-9A-F]+'.'[0-9A-F]);
+CONSTREAL: [+-]?([0-9]+'.'[0-9]+|'$'[0-9A-F]+'.'[0-9A-F]+);
 
 IDENTIFICADOR: [_a-z]+[a-zA-Z0-9()_]*;
 
-//esto hay que ponerlo bien
+//comentarios
 LINE_COMENT: '%%'STUFF'\n';
-MULTI_COMENT: '%-' (~[-]|'-'~[%]) '-%';
+MULTI_COMENT: '%-' (~[-]|'-'~[%])* '-%';
 
 CONSTLIT: ('"' COMILLA_DOBLE '"'|'\'' COMILLA_SIMPLE '\'');
 
+//expresiones regulares de ayuda
 fragment
-STUFF: (~[\n]|~[\r])+ ;
+STUFF: (~[\n])+ ;
 fragment
 COMILLA_DOBLE: ('""'|~["])+;
 fragment
