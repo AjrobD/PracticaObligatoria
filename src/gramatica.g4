@@ -21,18 +21,19 @@ IDENTIFICADOR: [_a-z]+[a-zA-Z0-9()_]*;
 
 //esto hay que ponerlo bien
 LINE_COMENT: '%%'STUFF'\n';
-MULTI_COMENT: '%-' STUFF2+ '-%';
+MULTI_COMENT: '%-' (~[-]|'-'~[%]) '-%';
 
 CONSTLIT: ('"' COMILLA_DOBLE '"'|'\'' COMILLA_SIMPLE '\'');
 
 fragment
-STUFF: ~[\n]+ ;
-fragment
-STUFF2: ~[-%]+ ;
+
+STUFF: (~[\n]|~[\r])+ ;
+
 fragment
 COMILLA_DOBLE: ('""'|~["])+;
 fragment
 COMILLA_SIMPLE: ('\'\''|~['])+;
+
 
 WS: [\n\r];
 OTHER: [ a-zA-Z0-9?¿!*,;:.+\-@$%&()=<_/~\t|[\]#];
