@@ -32,5 +32,7 @@ fragment
 COMILLA_DOBLE: ('""'|~["])+;
 fragment
 COMILLA_SIMPLE: ('\'\''|~['])+;
+
+
 WS: [\n\r];
 OTHER: [ a-zA-Z0-9?¿!*,;:.+\-@$%&()=<_/~\t|[\]#];
