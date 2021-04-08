@@ -68,7 +68,8 @@ WS: [\n\r];
 //OTHER: [ a-zA-Z0-9?¿!*,;:.+\-@$%&()=<_/~\t|[\]#];
 
 //Especificación sintáctica con parte opcioanl incluida
-program : part program | part;
+ayuda: program EOF;
+program : part program| part;
 part: FUNCION type restpart
     | PROCEDIMIENTO restpart;
 restpart : IDENTIFICADOR ABRIR_PARENTESIS listparam CERRAR_PARENTESIS blq
