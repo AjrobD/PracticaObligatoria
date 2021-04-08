@@ -11,14 +11,14 @@ REAL: 'real';
 CARACTER: 'caracter';
 INICIO: 'inicio';
 FIN: 'fin';
-PUNTOYCOMA: ';';
+PUNTO_Y_COMA: ';';
 RETURN: 'return';
 COMA: ',';
 IGUAL: '=';
-MASIGUAL: '+=';
-MENOSIGUAL: '-=';
-PORIGUAL: '*=';
-ENTREIGUAL: '/=';
+MAS_IGUAL: '+=';
+MENOS_IGUAL: '-=';
+POR_IGUAL: '*=';
+ENTRE_IGUAL: '/=';
 MAS: '+';
 MENOS: '-';
 MULTIPLICACION: '*';
@@ -36,12 +36,12 @@ CIERTO: 'cierto';
 FALSO: 'falso';
 Y: 'y';
 O: 'o';
-IGUALIGUAL: '==';
+IGUAL_IGUAL: '==';
 DISTINTO: '<>';
 MENOR: '<';
 MAYOR: '>';
-MAYORIGUAL: '>=';
-MENORIGUAL: '<=';
+MAYOR_IGUAL: '>=';
+MENOR_IGUAL: '<=';
 
 //constantes numericas
 CONSTENTERO: [+-]?([0-9]+|'$'[0-9A-F]+);
@@ -65,60 +65,62 @@ COMILLA_SIMPLE: ('\'\''|~['])+;
 
 
 WS: [\n\r];
-OTHER: [ a-zA-Z0-9?¿!*,;:.+\-@$%&()=<_/~\t|[\]#];
+//OTHER: [ a-zA-Z0-9?¿!*,;:.+\-@$%&()=<_/~\t|[\]#];
 
 //Especificación sintáctica con parte opcioanl incluida
-program : part program
-        | part;
-part: 'funcion' type restpart
-    | 'procedimiento' restpart;
-restpart : IDENTIFICADOR '(' listparam ')' blq
-            | IDENTIFICADOR '(' ')' blq;
-listparam: listparam ',' type IDENTIFICADOR
+program : part program | part;
+part: FUNCION type restpart
+    | PROCEDIMIENTO restpart;
+restpart : IDENTIFICADOR ABRIR_PARENTESIS listparam CERRAR_PARENTESIS blq
+            | IDENTIFICADOR ABRIR_PARENTESIS CERRAR_PARENTESIS blq;
+listparam: listparam COMA type IDENTIFICADOR
             | type IDENTIFICADOR;
-type: 'entero'
-    | 'real'
-    | 'caracter';
-blq: 'inicio' sentlist 'fin';
+type: ENTERO
+    | REAL
+    | CARACTER;
+blq: INICIO sentlist FIN;
 
 sentlist: sentlist sent
         | sent;
-sent : type lid ';'
-        | IDENTIFICADOR asig exp ';'
-        | 'return' exp ';'
-        | IDENTIFICADOR '(' lid ')'' ";"' | IDENTIFICADOR '(' ')' ';'
-        | 'bifurcacion' '(' lcond ')' 'entonces' blq 'sino' blq
-        | 'buclepara' '(' IDENTIFICADOR asig exp ';' lcond ';' IDENTIFICADOR asig exp ")" blq
-        | 'buclemientras' '(' lcond ')' blq
-        | 'bucle' blq 'hasta' '(' lcond ')' | blq ;
+sent : type lid PUNTO_Y_COMA
+        | IDENTIFICADOR asig exp PUNTO_Y_COMA
+        | RETURN exp PUNTO_Y_COMA
+        | IDENTIFICADOR ABRIR_PARENTESIS lid CERRAR_PARENTESIS PUNTO_Y_COMA 
+        | IDENTIFICADOR ABRIR_PARENTESIS CERRAR_PARENTESIS PUNTO_Y_COMA
+        | BIFURCACION ABRIR_PARENTESIS lcond CERRAR_PARENTESIS ENTONCES blq SINO blq
+        | BUCLEPARA ABRIR_PARENTESIS IDENTIFICADOR asig exp PUNTO_Y_COMA lcond PUNTO_Y_COMA IDENTIFICADOR asig exp CERRAR_PARENTESIS blq
+        | BUCLEMIENTRIAS ABRIR_PARENTESIS lcond CERRAR_PARENTESIS blq
+        | BUCLE blq HASTA ABRIR_PARENTESIS lcond CERRAR_PARENTESIS | blq ;
 lid : IDENTIFICADOR
-    | IDENTIFICADOR ',' lid;
-asig : '='
-        | '+='
-        | '-='
-        | '*='
-        | '/=';
+    | IDENTIFICADOR COMA lid;
+asig : IGUAL
+        | MAS_IGUAL
+        | MENOS_IGUAL
+        | POR_IGUAL
+        | ENTRE_IGUAL;
 exp : exp op exp
-    | IDENTIFICADOR '(' lid ')'
-    | '(' exp ')'
+    | IDENTIFICADOR ABRIR_PARENTESIS lid CERRAR_PARENTESIS
+    | ABRIR_PARENTESIS exp CERRAR_PARENTESIS
     | IDENTIFICADOR | CONSTENTERO | CONSTREAL | CONSTLIT;
-op : '+'
-    | '-'
-    | '*'
-    | '/';
+op : MAS
+    | MENOS
+    | MULTIPLICACION
+    | DIVISION;
 
 //parte opcional
 lcond : lcond opl lcond
         | cond
-        | 'no' cond;
+        | NO cond;
 cond : exp opr exp
-        | 'cierto'
-        | 'falso';
-opl : 'y'
-    | 'o';
-opr: '=='
-    | '<>'
-    | '<'
-    | '>'
-    | '>='
-    | '<=';
+        | CIERTO
+        | FALSO;
+opl : Y
+    | O;
+opr: IGUAL_IGUAL
+    | DISTINTO
+    | MENOR
+    | MAYOR
+    | MAYOR_IGUAL
+    | MENOR_IGUAL;
+
+WHITESPACE : ( '\t' | ' ' | '\r' | '\n'| '\u000C' )+ -> skip;
