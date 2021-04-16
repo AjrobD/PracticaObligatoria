@@ -69,7 +69,8 @@ COMILLA_SIMPLE: ('\'\''|~['])+;
 
 //Especificación sintáctica con parte opcioanl incluida
 init: program;
-program: part program | part;
+program: part help1;
+help1: program | ;
 part: FUNCION type restpart
     | PROCEDIMIENTO restpart;
 restpart : IDENTIFICADOR ABRIR_PARENTESIS listparam CERRAR_PARENTESIS blq
