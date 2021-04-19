@@ -1,6 +1,4 @@
 grammar gramatica;
-r: (FUNCION|PROCEDIMIENTO|ABRIR_PARENTESIS|CERRAR_PARENTESIS|ENTERO|REAL|CARACTER|INICIO|FIN|RETURN|CONSTENTERO|CONSTREAL|IDENTIFICADOR|CONSTLIT|LINE_COMENT|MULTI_COMENT|WS|OTHER)+;
-
 //elementos del lenguaje
 FUNCION: 'funcion';
 PROCEDIMIENTO: 'procedimiento';
@@ -68,9 +66,10 @@ COMILLA_SIMPLE: ('\'\''|~['])+;
 //OTHER: [ a-zA-Z0-9?¿!*,;:.+\-@$%&()=<_/~\t|[\]#];
 
 //Especificación sintáctica con parte opcioanl incluida
-init: program;
+
+//init: program;
 program: part help1;
-help1: program | ;
+help1: part help1 | ;
 part: FUNCION type restpart
     | PROCEDIMIENTO restpart;
 restpart : IDENTIFICADOR ABRIR_PARENTESIS listparam CERRAR_PARENTESIS blq
