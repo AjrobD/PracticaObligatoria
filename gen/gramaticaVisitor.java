@@ -16,11 +16,11 @@ public interface gramaticaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitProgram(gramaticaParser.ProgramContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link gramaticaParser#help1}.
+	 * Visit a parse tree produced by {@link gramaticaParser#aux1}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitHelp1(gramaticaParser.Help1Context ctx);
+	T visitAux1(gramaticaParser.Aux1Context ctx);
 	/**
 	 * Visit a parse tree produced by {@link gramaticaParser#part}.
 	 * @param ctx the parse tree
@@ -34,11 +34,23 @@ public interface gramaticaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitRestpart(gramaticaParser.RestpartContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link gramaticaParser#aux2}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAux2(gramaticaParser.Aux2Context ctx);
+	/**
 	 * Visit a parse tree produced by {@link gramaticaParser#listparam}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitListparam(gramaticaParser.ListparamContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link gramaticaParser#listparamAux}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitListparamAux(gramaticaParser.ListparamAuxContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link gramaticaParser#type}.
 	 * @param ctx the parse tree
@@ -58,17 +70,41 @@ public interface gramaticaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitSentlist(gramaticaParser.SentlistContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link gramaticaParser#sentlistAux}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSentlistAux(gramaticaParser.SentlistAuxContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link gramaticaParser#sent}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitSent(gramaticaParser.SentContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link gramaticaParser#aux3}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAux3(gramaticaParser.Aux3Context ctx);
+	/**
+	 * Visit a parse tree produced by {@link gramaticaParser#aux4}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAux4(gramaticaParser.Aux4Context ctx);
+	/**
 	 * Visit a parse tree produced by {@link gramaticaParser#lid}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitLid(gramaticaParser.LidContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link gramaticaParser#aux5}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAux5(gramaticaParser.Aux5Context ctx);
 	/**
 	 * Visit a parse tree produced by {@link gramaticaParser#asig}.
 	 * @param ctx the parse tree
@@ -82,6 +118,18 @@ public interface gramaticaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExp(gramaticaParser.ExpContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link gramaticaParser#expAux}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExpAux(gramaticaParser.ExpAuxContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link gramaticaParser#aux6}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAux6(gramaticaParser.Aux6Context ctx);
+	/**
 	 * Visit a parse tree produced by {@link gramaticaParser#op}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -93,6 +141,12 @@ public interface gramaticaVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitLcond(gramaticaParser.LcondContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link gramaticaParser#lcondAux}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLcondAux(gramaticaParser.LcondAuxContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link gramaticaParser#cond}.
 	 * @param ctx the parse tree

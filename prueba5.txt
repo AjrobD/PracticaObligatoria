@@ -1,0 +1,10 @@
+funcion real pi ( ) inicio
+    return 3.14 ;
+fin
+
+
+funcion caracter longitud ( real radio ) inicio
+    real longitud ;
+    longitug = 2 * pi ( ) * radio ;
+    return "La 'longitud' es" + longitud ;
+fin

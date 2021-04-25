@@ -1,0 +1,15 @@
+funcion real mayor ( real num1 , real num2 ) inicio
+    bifurcacion ( num1 <= num2 ) entonces inicio
+        return num2;
+    fin sino inicio
+        return num1;
+    fin
+fin
+
+funcion real fct2 ( real numero , entero maximo ) inicio
+    var1 = 3.4 ;
+    buclepara ( i = 0 ; i < maximo ; i = i + 1 ) inicio
+        numero = numero + i ;
+    fin
+    return mayor ( numero , var1 ) ;
+fin

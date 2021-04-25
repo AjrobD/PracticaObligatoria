@@ -1,0 +1,14 @@
+procedimiento fct3 ( entero argumento ) inicio
+    entero i , j , suma ;
+    i = 0 ;
+    suma = 0;
+    bucle inicio
+        j = 0 ;
+        bucle inicio
+            suma += j ;
+            j += 1 ;
+        fin hasta ( j >=2 )
+        i += 1 ;
+    fin hasta ( i >= 2 )
+    argumento += suma ;
+fin
