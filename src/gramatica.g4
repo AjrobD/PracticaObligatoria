@@ -61,13 +61,8 @@ COMILLA_DOBLE: ('""'|~["])+;
 fragment
 COMILLA_SIMPLE: ('\'\''|~['])+;
 
-
-//WS: [\n\r];
-//OTHER: [ a-zA-Z0-9?¿!*,;:.+\-@$%&()=<_/~\t|[\]#];
-
 //Especificación sintáctica con parte opcioanl incluida
 
-//init: program;
 program: part aux1;
 aux1: part aux1 | ;
 part: FUNCION type restpart
