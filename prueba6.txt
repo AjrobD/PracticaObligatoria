@@ -1,10 +1,13 @@
 procedimiento pi ( real numero ) inicio
     numero = 3.14 ;
-fin
+    hola hola = 5 ;
+    ;;;
+    y == 8
+
 
 funcion caracter longitud ( real radio ) inicio
     real longitud , pi ;
     pi ( pi ) ;
-    longitud = 2 * pi * radio ;
+    longitud = 2 * pi * radio
     return "La 'longitud' es" + longitud ;
 fin

@@ -1,0 +1,13 @@
+funcion real fct2 ( real numero , caracter booleano ) inicio
+    var1 = 3.4 ;
+    bifurcacion ( booleano == "verdadero" ) entonces inicio
+        return numero ;
+    fin sino inicio inicio
+        bifurcacion ( numero == 5 ) entonces inicio
+            numero += 1 ;
+        fin sino  inicio
+            booleano = verdadero ;
+        fin
+        fct2 ( numero , booleano ) ;
+    fin
+fin
