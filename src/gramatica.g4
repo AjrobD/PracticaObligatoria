@@ -82,14 +82,22 @@ aux2: listparam CERRAR_PARENTESIS blq
     | CERRAR_PARENTESIS blq;
 listparam: type IDENTIFICADOR listparamAux;
 listparamAux: COMA type IDENTIFICADOR listparamAux | ;
-type: ENTERO
+type returns [String tipo]:
+    ENTERO{
+        $tipo = $ENTERO.text;
+    }
     | REAL
     | CARACTER;
 blq: INICIO sentlist FIN;
 
 sentlist: sent sentlistAux;
 sentlistAux : sent sentlistAux | ;
-sent : type lid PUNTO_Y_COMA
+sent returns [Sentencia sentencia]:
+        type lid PUNTO_Y_COMA{
+            String tipo = $type.tipo;
+            String lid = $lid.lid_text;
+            $sentencia = new Declaracion(tipo,lid); //Declaracion extends Sentencia
+        }
         | IDENTIFICADOR aux3
         | RETURN exp PUNTO_Y_COMA
         | BIFURCACION ABRIR_PARENTESIS lcond CERRAR_PARENTESIS ENTONCES blq SINO blq
@@ -100,8 +108,17 @@ sent : type lid PUNTO_Y_COMA
 aux3: asig exp PUNTO_Y_COMA | ABRIR_PARENTESIS aux4;
 aux4: lid CERRAR_PARENTESIS PUNTO_Y_COMA
     | CERRAR_PARENTESIS PUNTO_Y_COMA ;
-lid : IDENTIFICADOR aux5;
-aux5: COMA lid | ;
+lid returns [String lid_text]:
+        IDENTIFICADOR aux5{
+            String identificador = $IDENTIFICADOR.text;
+            $lid_text = identificador + $aux5.aux5_text;
+        };
+aux5 returns [String aux5_text]:
+        COMA lid {
+            String coma = $COMA.text;
+            $aux5_text = coma + $lid.lid_text;
+        }
+        |;
 asig : IGUAL
         | MAS_IGUAL
         | MENOS_IGUAL

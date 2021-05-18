@@ -1,2 +1,2 @@
-public class Return extends Sentencias{
+public class Return extends Sentencia {
 }

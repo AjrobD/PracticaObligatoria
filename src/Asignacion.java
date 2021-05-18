@@ -1,2 +1,2 @@
-public class Asignacion extends Sentencias{
+public class Asignacion extends Sentencia {
 }
