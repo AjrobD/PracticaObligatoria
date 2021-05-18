@@ -1,4 +1,14 @@
 grammar gramatica;
+
+@parser::members {
+    private Program programa;
+
+    public gramaticaParser(TokenStream input, Program thePrograma){
+        this(input);
+        programa = thePrograma;
+    }
+}
+
 //elementos del lenguaje
 FUNCION: 'funcion';
 PROCEDIMIENTO: 'procedimiento';
