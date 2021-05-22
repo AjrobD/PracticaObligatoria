@@ -108,7 +108,7 @@ aux2 returns[ArrayList<Parametro> parametros, ArrayList<Sentencia> listaSent]: /
 listparam returns[ArrayList<Parametro> lista]:
     type IDENTIFICADOR listparamAux{
         Parametro param = new Parametro($type.tipo, $IDENTIFICADOR.text);
-        $lista = $listparamAux.add(param);
+        $lista = $listparamAux.lista.add(param);
     };
 listparamAux returns[ArrayList<Parametro> lista]:
     COMA type IDENTIFICADOR listparamAux{
@@ -139,19 +139,19 @@ blq returns[ArrayList<Sentencia> sentencias]:
 sentlist returns[ArrayList<Sentencia> sentencias]:
     sent sentlistAux{
         Sentencia s = $sent.sentencia;
-        $sentencias = $sentListAux.sentencias.add(s);
+        $sentencias = $sentlistAux.sentencias.add(s);
     };
 sentlistAux returns[ArrayList<Sentencia> sentencias]:
     sent sentlistAux {
         $sentencias = $sentencias.add($sent.sentencia);
     }
     |{
-        $sentencias = new ArrayList<>;
+        $sentencias = new ArrayList<>();
     } ;
 sent returns [Sentencia sentencia]:
         type lid PUNTO_Y_COMA{
             String tipo = $type.tipo;
-            String lid = $lid.lid_text;
+            ArrayList<String> lid = $lid.identificadores;
             $sentencia = new Declaracion(tipo,lid); //Declaracion extends Sentencia
         }
         | IDENTIFICADOR aux3{
@@ -166,25 +166,24 @@ sent returns [Sentencia sentencia]:
         | BUCLE blq HASTA ABRIR_PARENTESIS lcond CERRAR_PARENTESIS
         | blq ;
 aux3: asig exp PUNTO_Y_COMA | ABRIR_PARENTESIS aux4;
-aux4 returns [String lid_comp]:
+aux4 returns [ArrayList<String> ids]:
     lid CERRAR_PARENTESIS PUNTO_Y_COMA{
-        $lid_comp = $lid.lid_text +");";
+        $ids = $lid.identificadores;
     }
     | CERRAR_PARENTESIS PUNTO_Y_COMA{
-        $lid_comp = ");";
+        $ids = new ArrayList<>();
     };
 lid returns [ArrayList<String> identificadores]:
         IDENTIFICADOR aux5{
             $identificadores = $aux5.ids.add(identificador);
         };
 aux5 returns [ArrayList<String> ids]:
-        COMA lid {
             //$ids = $lid.identificadores
             //String coma = $COMA.text;
             //$aux5_text = coma + $lid.lid_text;
             //Eso que tenemos arriba es como estaba antes
             //Pero queremos el objeto no el texto, lo dejo para que se vea el ejemplo
-
+        COMA lid {
             $ids = $lid.identificadores
         }
         |{
