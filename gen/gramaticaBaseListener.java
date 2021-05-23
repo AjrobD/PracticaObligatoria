@@ -171,6 +171,18 @@ public class gramaticaBaseListener implements gramaticaListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterAux3Prima(gramaticaParser.Aux3PrimaContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAux3Prima(gramaticaParser.Aux3PrimaContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterAux4(gramaticaParser.Aux4Context ctx) { }
 	/**
 	 * {@inheritDoc}

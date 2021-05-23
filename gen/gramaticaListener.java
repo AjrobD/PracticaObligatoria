@@ -137,6 +137,16 @@ public interface gramaticaListener extends ParseTreeListener {
 	 */
 	void exitAux3(gramaticaParser.Aux3Context ctx);
 	/**
+	 * Enter a parse tree produced by {@link gramaticaParser#aux3Prima}.
+	 * @param ctx the parse tree
+	 */
+	void enterAux3Prima(gramaticaParser.Aux3PrimaContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link gramaticaParser#aux3Prima}.
+	 * @param ctx the parse tree
+	 */
+	void exitAux3Prima(gramaticaParser.Aux3PrimaContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link gramaticaParser#aux4}.
 	 * @param ctx the parse tree
 	 */

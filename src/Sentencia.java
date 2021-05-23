@@ -1,2 +1,4 @@
-public class Sentencia {
+public abstract class Sentencia {
+    @Override
+    public abstract String toString();
 }

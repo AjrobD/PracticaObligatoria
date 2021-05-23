@@ -4,20 +4,14 @@ public class Program {
     ArrayList<Part> partes;
 
     public Program(Part parte1, ArrayList<Part> partes) {
-        partes = new ArrayList<Part>();
-        partes.add(parte1);
-        partes.addAll(partes);
+        this.partes = new ArrayList<Part>();
+        this.partes.add(parte1);
+        this.partes.addAll(partes);
     }
 
     /* aqui no se genera todo el codigo html que se va a imprimir
     muchas partes del codigo se generan en el .java porque son cosas que program desconoce
-    como el nombre del fichero de entrada
-    <H2>Funciones y procedimientos</H2>
-    <UL>
-    <LI><A HREF="#areaCuadrado">real areaCuadrado ( real lado )</A></LI>
-    <LI><A HREF="#intercambioEntero">intercambioEntero ( entero v1, entero v2)</A></LI>
-    </UL>
-     */
+    como el nombre del fichero de entrada*/
     @Override
     public String toString() {
         String pagina = "";
@@ -26,11 +20,12 @@ public class Program {
         for(Part parte : partes){
             String cabecera = parte.getCabecera();
             String nombre = parte.getNombre();
-            pagina += "<LI>" + "<A HREF = '" + nombre + "'>" + cabecera + "</A></LI> \n";
+            pagina += "<LI>" + "<A HREF = '" + nombre + "'>" + cabecera;
         }
         pagina += "</UL> \n";
+        pagina += "\n";
         for(Part parte : partes){
-            pagina += "<HR/> \n";
+            pagina += parte.toString();
         }
         return pagina;
     }

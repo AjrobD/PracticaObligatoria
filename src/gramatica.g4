@@ -74,11 +74,14 @@ COMILLA_SIMPLE: ('\'\''|~['])+;
 
 program:
     part aux1{
-        Program programa = new Program($part.parte,$aux1.partes);
-        programa.toString();
+        Part parte = $part.parte;
+        ArrayList<Part> partes = $aux1.partes;
+        Program programa = new Program(parte,partes);
+        System.out.println(programa.toString());
     }; //Aquí tendríamos solo que crear el objeto de tipo program y hacer un print
 aux1 returns [ArrayList<Part> partes]:
     part aux1 {
+        $partes = new ArrayList<Part>();
         $partes.add($part.parte);
     }
     | {
@@ -111,17 +114,17 @@ aux2 returns[ArrayList<Parametro> parametros, ArrayList<Sentencia> listaSent]: /
     };
 listparam returns[ArrayList<Parametro> lista]:
     type IDENTIFICADOR listparamAux{
+        $lista = new ArrayList<>();
         Parametro param = new Parametro($type.tipo, $IDENTIFICADOR.text);
-        $listparamAux.lista.add(param);
-        $lista = $listparamAux.lista;
+        $lista.add(param);
+        $lista.addAll($listparamAux.lista);
     };
 listparamAux returns[ArrayList<Parametro> lista]:
     COMA type IDENTIFICADOR listparamAux{
+        $lista = new ArrayList<>();
         Parametro param = new Parametro($type.tipo, $IDENTIFICADOR.text);
-        $lista.add(param); //no puedo probarlo porque no se compila aun
-                                    //Pero esto aunque tiene sentido, no se si funcionara
-                                    //Por ser la recursividad en una misma regla
-                                    //Quiero añadir el param a la lista que me pasa lo de abajo justo
+        $lista.add(param);
+        $lista.addAll($listparamAux.lista);
     }
     | {
         $lista = new ArrayList<>();
@@ -138,18 +141,21 @@ type returns [String tipo]:
     };
 blq returns[ArrayList<Sentencia> sentencias]:
     INICIO sentlist FIN{
+        $sentencias = new ArrayList<>();
         $sentencias = $sentlist.sentencias;
     };
 
 sentlist returns[ArrayList<Sentencia> sentencias]:
     sent sentlistAux{
-        Sentencia s = $sent.sentencia;
-        $sentlistAux.sentencias.add(s);
-        $sentencias = $sentlistAux.sentencias;
+        $sentencias = new ArrayList<>();
+        $sentencias.add($sent.sentencia);
+        $sentencias.addAll($sentlistAux.sentencias);
     };
 sentlistAux returns[ArrayList<Sentencia> sentencias]:
     sent sentlistAux {
+        $sentencias = new ArrayList<>();
         $sentencias.add($sent.sentencia);
+        $sentencias.addAll($sentlistAux.sentencias);
     }
     | {
         $sentencias = new ArrayList<>();
@@ -157,52 +163,66 @@ sentlistAux returns[ArrayList<Sentencia> sentencias]:
 sent returns [Sentencia sentencia]:
         type lid PUNTO_Y_COMA{
             String tipo = $type.tipo;
-            ArrayList<String> lid = $lid.identificadores;
+            ArrayList<Varios> lid = $lid.identificadores;
             $sentencia = new Declaracion(tipo,lid); //Declaracion extends Sentencia
         }
         | IDENTIFICADOR aux3{
             String ident = $IDENTIFICADOR.text;
-            ArrayList<String> aux3 = $aux3.asignacion;
-            $sentencia = new Asignacion(ident,aux3); //Asignacion extends Sentencia
+            String asig = $aux3.asignacion;
+            ArrayList<Varios> aux3 = $aux3.asignaciones;
+            $sentencia = new Asignacion(ident,asig,aux3); //Asignacion extends Sentencia
+        }
+        | IDENTIFICADOR aux3Prima{
+            String ident = $IDENTIFICADOR.text;
+            ArrayList<Varios> aux3Pr = $aux3Prima.funcion;
+            $sentencia = new LLamada(ident,aux3Pr); //Asignacion extends Sentencia
         }
         | RETURN exp PUNTO_Y_COMA{
-            $sentencia = new Return($exp.expresion);
+            $sentencia = new Return($exp.expresion);//Return extends sentencia
         }
         | BIFURCACION ABRIR_PARENTESIS lcond CERRAR_PARENTESIS ENTONCES blq SINO blq
         | BUCLEPARA ABRIR_PARENTESIS IDENTIFICADOR asig exp PUNTO_Y_COMA lcond PUNTO_Y_COMA IDENTIFICADOR asig exp CERRAR_PARENTESIS blq
         | BUCLEMIENTRAS ABRIR_PARENTESIS lcond CERRAR_PARENTESIS blq
         | BUCLE blq HASTA ABRIR_PARENTESIS lcond CERRAR_PARENTESIS
         | blq ;
-aux3 returns [ArrayList<String> asignacion]:
+aux3 returns [String asignacion, ArrayList<Varios> asignaciones]:
     asig exp PUNTO_Y_COMA{
-        $asignacion = new ArrayList<>();
-        $asignacion.add($asig.s);
-        $asignacion.addAll($exp.expresion);
-        $asignacion.add(";");
-    }
-    | ABRIR_PARENTESIS aux4{
-        $asignacion = new ArrayList<>();
-        $asignacion.add("(");
-        $asignacion.addAll($aux4.ids);
+        $asignaciones = new ArrayList<>();
+        $asignacion = $asig.s;
+        $asignaciones.addAll($exp.expresion);
     };
-aux4 returns [ArrayList<String> ids]:
+//Hago esta diferencia porque las cosas que reconocen son demasiado diferentes como para estar en aux3
+aux3Prima returns [ArrayList<Varios> funcion]:
+    ABRIR_PARENTESIS aux4{
+        $funcion = new ArrayList<>();
+        Otros otro = new Otros("(");
+        $funcion.add(otro);
+        $funcion.addAll($aux4.ids);
+    };
+aux4 returns [ArrayList<Varios> ids]:
     lid CERRAR_PARENTESIS PUNTO_Y_COMA{
         $ids = new ArrayList<>();
         $ids.addAll($lid.identificadores);
-        $ids.add(")");
-        $ids.add(";");
+        Otros otro = new Otros(")");
+        $ids.add(otro);
+        otro = new Otros(";");
+        $ids.add(otro);
     }
     | CERRAR_PARENTESIS PUNTO_Y_COMA{
         $ids = new ArrayList<>();
-        $ids.add(")");
-        $ids.add(";");
+        Otros otro = new Otros(")");
+        $ids.add(otro);
+        otro = new Otros(";");
+        $ids.add(otro);
     };
-lid returns [ArrayList<String> identificadores]:
+lid returns [ArrayList<Varios> identificadores]:
         IDENTIFICADOR aux5{
-            $aux5.ids.add(0,$IDENTIFICADOR.text); //lo añadimos al inicio del todo
-            $identificadores = $aux5.ids;
+            $identificadores = new ArrayList<>();
+            Identificador ident = new Identificador($IDENTIFICADOR.text);
+            $identificadores.add(ident); //lo añadimos al inicio del todo
+            $identificadores.addAll($aux5.ids);
         };
-aux5 returns [ArrayList<String> ids]:
+aux5 returns [ArrayList<Varios> ids]:
             //$ids = $lid.identificadores
             //String coma = $COMA.text;
             //$aux5_text = coma + $lid.lid_text;
@@ -213,7 +233,7 @@ aux5 returns [ArrayList<String> ids]:
         }
         | {
            //la primera que va a reconocer por recursividad, creamos la lista vacia
-           $ids = new ArrayList<String>();
+           $ids = new ArrayList<>();
         };
 asig returns [String s]: IGUAL{
         $s = "=";
@@ -230,50 +250,60 @@ asig returns [String s]: IGUAL{
     | ENTRE_IGUAL{
         $s = "*=";
     };
-exp returns [ArrayList<String> expresion]:
+exp returns [ArrayList<Varios> expresion]:
     IDENTIFICADOR aux6 expAux{
         $expresion = new ArrayList<>();
-        $expresion.add($IDENTIFICADOR.text);
+        Identificador ident = new Identificador($IDENTIFICADOR.text);
+        $expresion.add(ident);
         $expresion.addAll($aux6.parametros);
         $expresion.addAll($expAux.expresiones);
     }
     | ABRIR_PARENTESIS exp CERRAR_PARENTESIS expAux{
         $expresion = new ArrayList<>();
-        $expresion.add("(");
+        Otros otro = new Otros("(");
+        $expresion.add(otro);
         $expresion.addAll($exp.expresion);
-        $expresion.add(")");
+        otro = new Otros(")");
+        $expresion.add(otro);
         $expresion.addAll($expAux.expresiones);
     }
     | CONSTENTERO expAux{
         $expresion = new ArrayList<>();
-        $expresion.add($CONSTENTERO.text);
+        Constante cons = new Constante($CONSTENTERO.text);
+        $expresion.add(cons);
         $expresion.addAll($expAux.expresiones);
     }
     | CONSTREAL expAux{
         $expresion = new ArrayList<>();
-        $expresion.add($CONSTREAL.text);
+        Constante cons = new Constante($CONSTREAL.text);
+        $expresion.add(cons);
         $expresion.addAll($expAux.expresiones);
     }
     | CONSTLIT expAux{
         $expresion = new ArrayList<>();
-        $expresion.add($CONSTLIT.text);
+        Constante cons = new Constante($CONSTLIT.text);
+        $expresion.add(cons);
         $expresion.addAll($expAux.expresiones);
     };
-expAux returns [ArrayList<String> expresiones]:
+expAux returns [ArrayList<Varios> expresiones]:
     op exp expAux{
-        $expresiones.add($op.operacion);
+        $expresiones = new ArrayList<>();
+        Otros otro = new Otros($op.operacion);
+        $expresiones.add(otro);
         $expresiones.addAll($exp.expresion);
         $expresiones.addAll($expAux.expresiones);
     }
     | {
         $expresiones = new ArrayList<>();
     };
-aux6 returns [ArrayList<String> parametros]:
+aux6 returns [ArrayList<Varios> parametros]:
     ABRIR_PARENTESIS lid CERRAR_PARENTESIS{
         $parametros = new ArrayList<>();
-        $parametros.add("(");
+        Otros otro = new Otros("(");
+        $parametros.add(otro);
         $parametros.addAll($lid.identificadores);
-        $parametros.add(")");
+        otro = new Otros(")");
+        $parametros.add(otro);
     }
     | {
         $parametros = new ArrayList<>();

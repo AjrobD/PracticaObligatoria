@@ -3,12 +3,12 @@ import java.util.ArrayList;
 public abstract class Part {
     String nombre;
     ArrayList<Parametro> variables;
-    ArrayList<Sentencia> restPart;
+    ArrayList<Sentencia> sentencias;
 
-    public Part(String nombre, ArrayList<Parametro> variables, ArrayList<Sentencia> restPart) {
+    public Part(String nombre, ArrayList<Parametro> variables, ArrayList<Sentencia> sentencias) {
         this.nombre = nombre;
         this.variables = variables;
-        this.restPart = restPart;
+        this.sentencias = sentencias;
     }
 
     public String getNombre() {
@@ -18,4 +18,5 @@ public abstract class Part {
     @Override
     public abstract String toString();
     public abstract String getCabecera();
+    public abstract String getTipo();
 }

@@ -1,13 +1,39 @@
 import java.util.ArrayList;
 
 public class Procedimiento extends Part{
-    public Procedimiento(String nombre, ArrayList<Parametro> variables, ArrayList<Sentencia> restPart) {
-        super(nombre, variables, restPart);
+    public Procedimiento(String nombre, ArrayList<Parametro> variables, ArrayList<Sentencia> sentencias) {
+        super(nombre, variables, sentencias);
     }
 
     @Override
     public String toString() {
-        return null;
+        String parte = "";
+        parte += "<HR/> \n";
+        parte += "<A NAME='"+this.getNombre()+"'></A> \n";
+        parte += "<SPAN CLASS='palres'>";
+        parte += "procedimiento";
+        parte += "</SPAN> ";
+        parte += "<SPAN CLASS='ident'>" + this.getNombre() + "</SPAN> ( ";
+        int contador = 0;
+        for(Parametro parametro: variables){
+            contador++;
+            parte += "<SPAN CLASS='palres'>" + parametro.getTipo() + "</SPAN> ";
+            parte += "<SPAN CLASS='ident'>" + parametro.getNombre() + "</SPAN>";
+            if(contador< variables.size()) {
+                parte += ", ";
+            }
+        }
+        parte += ") <BR/>";
+        parte += "<SPAN CLASS='palres'>inicio</SPAN><BR/>";
+
+        for(Sentencia sentencia: sentencias){
+            parte += sentencia.toString();
+        }
+
+        parte += "<SPAN CLASS='palres'>fin</SPAN><BR/>";
+        parte += "<A HREF='#" + this.getNombre() +"'>Inicio de rutina</A><BR/>";
+        parte += "<A HREF='#inicio'>Inicio de programa</A><BR/>";
+        return parte;
     }
 
     @Override
@@ -26,6 +52,11 @@ public class Procedimiento extends Part{
         }
         cabecera += ")</A></LI>";
         return cabecera;
+    }
+
+    @Override
+    public String getTipo() {
+        return "";
     }
 
 }

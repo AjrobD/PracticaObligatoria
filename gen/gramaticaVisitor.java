@@ -88,6 +88,12 @@ public interface gramaticaVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAux3(gramaticaParser.Aux3Context ctx);
 	/**
+	 * Visit a parse tree produced by {@link gramaticaParser#aux3Prima}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAux3Prima(gramaticaParser.Aux3PrimaContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link gramaticaParser#aux4}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
