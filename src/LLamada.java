@@ -12,7 +12,7 @@ public class LLamada extends Sentencia{
     @Override
     public String toString() {
         String sentencia = "";
-        sentencia += "<DIV style='text-indent: 0.5cm'><SPAN CLASS='ident'>";
+        sentencia += "<DIV><SPAN CLASS='ident'>";
         sentencia += this.identificador;
         sentencia += "</SPAN> ";
 

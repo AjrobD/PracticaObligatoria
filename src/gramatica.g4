@@ -69,7 +69,7 @@ STUFF: (~[\n])+ ;
 fragment
 COMILLA_DOBLE: ('""'|~["])+;
 fragment
-COMILLA_SIMPLE: ('\'\''|~['])+;
+COMILLA_SIMPLE: ('\'\'' |~['])+;
 
 
 program:
@@ -109,8 +109,7 @@ aux2 returns[ArrayList<Parametro> parametros, Blq bloque]: //FALTA TRATAR EL BLQ
         $bloque = $blq.bloque;
     }
     | CERRAR_PARENTESIS blq[1]{
-        $parametros = new ArrayList<>(); //Tambien podemos poner puntero a null si da problemas al construir
-                                         //y así vemos que si la lista de params es null es que no tiene ninguno
+        $parametros = new ArrayList<>();
         $bloque = $blq.bloque;
     };
 listparam returns[ArrayList<Parametro> lista]:
@@ -186,16 +185,6 @@ sent[int indent] returns [Sentencia sentencia]:
             $sentencia = new Bifurcacion($lcond.listaConds,$blq1.bloque,$blq2.bloque);
         }
         | BUCLEPARA ABRIR_PARENTESIS id1=IDENTIFICADOR asig1=asig exp1=exp PUNTO_Y_COMA lcond PUNTO_Y_COMA id2=IDENTIFICADOR asig2=asig exp2=exp CERRAR_PARENTESIS blq[$indent]{
-            /*String ident1 = $id1.text;
-            String asi1 = $asig1.s;
-            Asignacion asig1 = new Asignacion(ident1,asi1,$exp1.expresion);
-            String ident2 = $id2.text;
-            String asi2 = $asig2.s;
-            Asignacion asig2 = new Asignacion(ident2,asi2,$exp2.expresion);
-
-            $sentencia = new BuclePara(asig1,$lcond.listaConds,asig2,$blq.bloque);
-            */
-
             $sentencia = new BuclePara($id1.text,$asig1.s,$exp1.expresion,$lcond.listaConds,$id2.text,$asig2.s,$exp2.expresion,$blq.bloque);
         }
         | BUCLEMIENTRAS ABRIR_PARENTESIS lcond CERRAR_PARENTESIS blq[$indent]
@@ -239,11 +228,6 @@ lid returns [ArrayList<Varios> identificadores]:
             $identificadores.addAll($aux5.ids);
         };
 aux5 returns [ArrayList<Varios> ids]:
-            //$ids = $lid.identificadores
-            //String coma = $COMA.text;
-            //$aux5_text = coma + $lid.lid_text;
-            //Eso que tenemos arriba es como estaba antes
-            //Pero queremos el objeto no el texto, lo dejo para que se vea el ejemplo
         COMA lid {
             $ids = $lid.identificadores;
         }

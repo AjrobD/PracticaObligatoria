@@ -9,7 +9,6 @@ public class Blq {
         this.indent = indent;
     }
 
-    //<DIV style="text-indent: 0.5cm">
     @Override
     public String toString() {
         String bloque = "";

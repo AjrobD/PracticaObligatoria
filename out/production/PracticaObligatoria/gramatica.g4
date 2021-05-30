@@ -69,7 +69,7 @@ STUFF: (~[\n])+ ;
 fragment
 COMILLA_DOBLE: ('""'|~["])+;
 fragment
-COMILLA_SIMPLE: ('\'\''|~['])+;
+COMILLA_SIMPLE: ('\'\'' |~['])+;
 
 
 program:
