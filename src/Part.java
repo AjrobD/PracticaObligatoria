@@ -3,12 +3,12 @@ import java.util.ArrayList;
 public abstract class Part {
     String nombre;
     ArrayList<Parametro> variables;
-    ArrayList<Sentencia> sentencias;
+    Blq bloque;
 
-    public Part(String nombre, ArrayList<Parametro> variables, ArrayList<Sentencia> sentencias) {
+    public Part(String nombre, ArrayList<Parametro> variables, Blq bloque) {
         this.nombre = nombre;
         this.variables = variables;
-        this.sentencias = sentencias;
+        this.bloque = bloque;
     }
 
     public String getNombre() {

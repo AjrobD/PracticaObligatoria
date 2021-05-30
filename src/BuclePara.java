@@ -8,9 +8,9 @@ public class BuclePara extends Sentencia{
     private String id2;
     private String asig2;
     ArrayList<Varios> exp2;
-    private ArrayList<Sentencia> blq;
+    private Blq bloque;
 
-    public BuclePara(String id1, String asig1, ArrayList<Varios> exp1, String listaConds, String id2, String asig2, ArrayList<Varios> exp2, ArrayList<Sentencia> blq) {
+    public BuclePara(String id1, String asig1, ArrayList<Varios> exp1, String listaConds, String id2, String asig2, ArrayList<Varios> exp2, Blq bloque) {
         this.id1 = id1;
         this.asig1 = asig1;
         this.exp1 = exp1;
@@ -18,13 +18,13 @@ public class BuclePara extends Sentencia{
         this.id2 = id2;
         this.asig2 = asig2;
         this.exp2 = exp2;
-        this.blq = blq;
+        this.bloque = bloque;
     }
 
     @Override
     public String toString() {
         String parte="";
-        parte += "<SPAN CLASS='palres'>";
+        parte += "<DIV><SPAN CLASS='palres'>";
         parte += "buclepara";
         parte += "</SPAN> (";
         //parte += "<A HREF='#"+id1+"'>"+id1+"</A>";
@@ -55,14 +55,12 @@ public class BuclePara extends Sentencia{
         }
 
         parte+=")";
-        parte+="</br>";
-        parte += "<SPAN CLASS='palres'>inicio</SPAN><BR/>";
+        parte+="</DIV>";
+        parte += "<DIV><SPAN CLASS='palres'>inicio</SPAN></DIV>";
 
-        for(Sentencia sentencia: blq){
-            parte += sentencia.toString();
-        }
+        parte += bloque.toString();
 
-        parte += "<SPAN CLASS='palres'>fin</SPAN><BR/>";
+        parte += "<DIV><SPAN CLASS='palres'>fin</SPAN></DIV>";
         return parte;
     }
 }

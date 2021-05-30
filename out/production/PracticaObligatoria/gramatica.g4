@@ -92,26 +92,26 @@ aux1 returns [ArrayList<Part> partes]:
 part returns [Part parte]:
     FUNCION type restpart{
         String tipo = $type.tipo;
-        $parte = new Funcion($restpart.nombre,tipo,$restpart.variables,$restpart.sentencias);
+        $parte = new Funcion($restpart.nombre,tipo,$restpart.variables,$restpart.bloque);
     }
     | PROCEDIMIENTO restpart{
-        $parte = new Procedimiento($restpart.nombre,$restpart.variables,$restpart.sentencias);
+        $parte = new Procedimiento($restpart.nombre,$restpart.variables,$restpart.bloque);
     };
-restpart returns [String nombre, ArrayList<Parametro> variables, ArrayList<Sentencia> sentencias]:
+restpart returns [String nombre, ArrayList<Parametro> variables, Blq bloque]:
     IDENTIFICADOR ABRIR_PARENTESIS aux2{
         $nombre = $IDENTIFICADOR.text;
         $variables = $aux2.parametros;
-        $sentencias = $aux2.listaSent;
+        $bloque = $aux2.bloque;
     };
-aux2 returns[ArrayList<Parametro> parametros, ArrayList<Sentencia> listaSent]: //FALTA TRATAR EL BLQ
-    listparam CERRAR_PARENTESIS blq{
+aux2 returns[ArrayList<Parametro> parametros, Blq bloque]: //FALTA TRATAR EL BLQ
+    listparam CERRAR_PARENTESIS blq[1]{
         $parametros = $listparam.lista;
-        $listaSent = $blq.sentencias;
+        $bloque = $blq.bloque;
     }
-    | CERRAR_PARENTESIS blq{
+    | CERRAR_PARENTESIS blq[1]{
         $parametros = new ArrayList<>(); //Tambien podemos poner puntero a null si da problemas al construir
                                          //y así vemos que si la lista de params es null es que no tiene ninguno
-        $listaSent = $blq.sentencias;
+        $bloque = $blq.bloque;
     };
 listparam returns[ArrayList<Parametro> lista]:
     type IDENTIFICADOR listparamAux{
@@ -140,20 +140,21 @@ type returns [String tipo]:
     | CARACTER{
        $tipo = $CARACTER.text;
     };
-blq returns[ArrayList<Sentencia> sentencias]:
-    INICIO sentlist FIN{
-        $sentencias = new ArrayList<>();
-        $sentencias = $sentlist.sentencias;
+blq [int indent] returns[Blq bloque]:
+    INICIO sentlist[$indent] FIN{
+        ArrayList<Sentencia> sentencias = new ArrayList<>();
+        sentencias = $sentlist.sentencias;
+        $bloque = new Blq($sentlist.sentencias,$indent);
     };
 
-sentlist returns[ArrayList<Sentencia> sentencias]:
-    sent sentlistAux{
+sentlist[int indent] returns[ArrayList<Sentencia> sentencias]:
+    sent[$indent+1] sentlistAux[$indent+1]{
         $sentencias = new ArrayList<>();
         $sentencias.add($sent.sentencia);
         $sentencias.addAll($sentlistAux.sentencias);
     };
-sentlistAux returns[ArrayList<Sentencia> sentencias]:
-    sent sentlistAux {
+sentlistAux[int indent] returns[ArrayList<Sentencia> sentencias]:
+    sent[$indent] sentlistAux[$indent] {
         $sentencias = new ArrayList<>();
         $sentencias.add($sent.sentencia);
         $sentencias.addAll($sentlistAux.sentencias);
@@ -161,7 +162,7 @@ sentlistAux returns[ArrayList<Sentencia> sentencias]:
     | {
         $sentencias = new ArrayList<>();
     } ;
-sent returns [Sentencia sentencia]:
+sent[int indent] returns [Sentencia sentencia]:
         type lid PUNTO_Y_COMA{
             String tipo = $type.tipo;
             ArrayList<Varios> lid = $lid.identificadores;
@@ -181,10 +182,10 @@ sent returns [Sentencia sentencia]:
         | RETURN exp PUNTO_Y_COMA{
             $sentencia = new Return($exp.expresion);//Return extends sentencia
         }//Ahora para diferenciar usamos labels
-        | BIFURCACION ABRIR_PARENTESIS lcond CERRAR_PARENTESIS ENTONCES blq1=blq SINO blq2=blq{
-            $sentencia = new Bifurcacion($lcond.listaConds,$blq1.sentencias,$blq2.sentencias);
+        | BIFURCACION ABRIR_PARENTESIS lcond CERRAR_PARENTESIS ENTONCES blq1=blq[$indent] SINO blq2=blq[$indent]{
+            $sentencia = new Bifurcacion($lcond.listaConds,$blq1.bloque,$blq2.bloque);
         }
-        | BUCLEPARA ABRIR_PARENTESIS id1=IDENTIFICADOR asig1=asig exp1=exp PUNTO_Y_COMA lcond PUNTO_Y_COMA id2=IDENTIFICADOR asig2=asig exp2=exp CERRAR_PARENTESIS blq{
+        | BUCLEPARA ABRIR_PARENTESIS id1=IDENTIFICADOR asig1=asig exp1=exp PUNTO_Y_COMA lcond PUNTO_Y_COMA id2=IDENTIFICADOR asig2=asig exp2=exp CERRAR_PARENTESIS blq[$indent]{
             /*String ident1 = $id1.text;
             String asi1 = $asig1.s;
             Asignacion asig1 = new Asignacion(ident1,asi1,$exp1.expresion);
@@ -192,14 +193,14 @@ sent returns [Sentencia sentencia]:
             String asi2 = $asig2.s;
             Asignacion asig2 = new Asignacion(ident2,asi2,$exp2.expresion);
 
-            $sentencia = new BuclePara(asig1,$lcond.listaConds,asig2,$blq.sentencias);
+            $sentencia = new BuclePara(asig1,$lcond.listaConds,asig2,$blq.bloque);
             */
 
-            $sentencia = new BuclePara($id1.text,$asig1.s,$exp1.expresion,$lcond.listaConds,$id2.text,$asig2.s,$exp2.expresion,$blq.sentencias);
+            $sentencia = new BuclePara($id1.text,$asig1.s,$exp1.expresion,$lcond.listaConds,$id2.text,$asig2.s,$exp2.expresion,$blq.bloque);
         }
-        | BUCLEMIENTRAS ABRIR_PARENTESIS lcond CERRAR_PARENTESIS blq
-        | BUCLE blq HASTA ABRIR_PARENTESIS lcond CERRAR_PARENTESIS
-        | blq ;
+        | BUCLEMIENTRAS ABRIR_PARENTESIS lcond CERRAR_PARENTESIS blq[$indent]
+        | BUCLE blq[$indent] HASTA ABRIR_PARENTESIS lcond CERRAR_PARENTESIS
+        | blq[$indent] ;
 aux3 returns [String asignacion, ArrayList<Varios> asignaciones]:
     asig exp PUNTO_Y_COMA{
         $asignaciones = new ArrayList<>();

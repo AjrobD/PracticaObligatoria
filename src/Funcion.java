@@ -4,8 +4,8 @@ public class Funcion extends Part{
     
     String tipo;
     
-    public Funcion(String nombre, String tipo, ArrayList<Parametro> variables, ArrayList<Sentencia> sentencias) {
-        super(nombre, variables, sentencias);
+    public Funcion(String nombre, String tipo, ArrayList<Parametro> variables, Blq bloque) {
+        super(nombre, variables, bloque);
         this.tipo = tipo;
     }
 
@@ -29,13 +29,11 @@ public class Funcion extends Part{
             }
         }
         parte += ") <BR/>";
-        parte += "<SPAN CLASS='palres'>inicio</SPAN><BR/>";
+        parte += "<SPAN CLASS='palres'>inicio</SPAN>";
 
-        for(Sentencia sentencia: sentencias){
-            parte += sentencia.toString();
-        }
+        parte += bloque.toString();
 
-        parte += "<SPAN CLASS='palres'>fin</SPAN><BR/>";
+        parte += "<SPAN CLASS='palres'>fin</SPAN></BR>";
         parte += "<A HREF='#" + this.getNombre() +"'>Inicio de rutina</A><BR/>";
         parte += "<A HREF='#inicio'>Inicio de programa</A><BR/>";
         return parte;

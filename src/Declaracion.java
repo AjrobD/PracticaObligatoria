@@ -12,7 +12,7 @@ public class Declaracion extends Sentencia {
     @Override
     public String toString() {
         String sentencia = "";
-        sentencia += "<DIV style='text-indent: 0.5cm'><SPAN CLASS='palres'>";
+        sentencia += "<DIV><SPAN CLASS='palres'>";
         sentencia += this.tipo;
         sentencia += "</SPAN> ";
         int contador = 0;

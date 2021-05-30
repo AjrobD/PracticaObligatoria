@@ -7,11 +7,10 @@ public class Return extends Sentencia {
         this.expresion = expresion;
     }
 
-    //<DIV style="text-indent: 0.5cm"><SPAN CLASS="palres">return</SPAN> <SPAN CLASS="ident">resultado</SPAN>;</DIV>
     @Override
     public String toString() {
         String sentencia = "";
-        sentencia += "<DIV style='text-indent: 0.5cm'><SPAN CLASS='palres'>";
+        sentencia += "<DIV><SPAN CLASS='palres'>";
         sentencia += "return";
         sentencia += "</SPAN> ";
         int contador = 0;

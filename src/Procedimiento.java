@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
 public class Procedimiento extends Part{
-    public Procedimiento(String nombre, ArrayList<Parametro> variables, ArrayList<Sentencia> sentencias) {
-        super(nombre, variables, sentencias);
+    public Procedimiento(String nombre, ArrayList<Parametro> variables, Blq bloque) {
+        super(nombre, variables, bloque);
     }
 
     @Override
@@ -24,13 +24,11 @@ public class Procedimiento extends Part{
             }
         }
         parte += ") <BR/>";
-        parte += "<SPAN CLASS='palres'>inicio</SPAN><BR/>";
+        parte += "<SPAN CLASS='palres'>inicio</SPAN>";
 
-        for(Sentencia sentencia: sentencias){
-            parte += sentencia.toString();
-        }
+        parte += bloque.toString();
 
-        parte += "<SPAN CLASS='palres'>fin</SPAN><BR/>";
+        parte += "<SPAN CLASS='palres'>fin</SPAN></BR>";
         parte += "<A HREF='#" + this.getNombre() +"'>Inicio de rutina</A><BR/>";
         parte += "<A HREF='#inicio'>Inicio de programa</A><BR/>";
         return parte;

@@ -304,7 +304,7 @@ public class gramaticaParser extends Parser {
 				((PartContext)_localctx).restpart = restpart();
 
 				        String tipo = ((PartContext)_localctx).type.tipo;
-				        ((PartContext)_localctx).parte =  new Funcion(((PartContext)_localctx).restpart.nombre,tipo,((PartContext)_localctx).restpart.variables,((PartContext)_localctx).restpart.sentencias);
+				        ((PartContext)_localctx).parte =  new Funcion(((PartContext)_localctx).restpart.nombre,tipo,((PartContext)_localctx).restpart.variables,((PartContext)_localctx).restpart.bloque);
 				    
 				}
 				break;
@@ -316,7 +316,7 @@ public class gramaticaParser extends Parser {
 				setState(71);
 				((PartContext)_localctx).restpart = restpart();
 
-				        ((PartContext)_localctx).parte =  new Procedimiento(((PartContext)_localctx).restpart.nombre,((PartContext)_localctx).restpart.variables,((PartContext)_localctx).restpart.sentencias);
+				        ((PartContext)_localctx).parte =  new Procedimiento(((PartContext)_localctx).restpart.nombre,((PartContext)_localctx).restpart.variables,((PartContext)_localctx).restpart.bloque);
 				    
 				}
 				break;
@@ -338,7 +338,7 @@ public class gramaticaParser extends Parser {
 	public static class RestpartContext extends ParserRuleContext {
 		public String nombre;
 		public ArrayList<Parametro> variables;
-		public ArrayList<Sentencia> sentencias;
+		public Blq bloque;
 		public Token IDENTIFICADOR;
 		public Aux2Context aux2;
 		public TerminalNode IDENTIFICADOR() { return getToken(gramaticaParser.IDENTIFICADOR, 0); }
@@ -380,7 +380,7 @@ public class gramaticaParser extends Parser {
 
 			        ((RestpartContext)_localctx).nombre =  (((RestpartContext)_localctx).IDENTIFICADOR!=null?((RestpartContext)_localctx).IDENTIFICADOR.getText():null);
 			        ((RestpartContext)_localctx).variables =  ((RestpartContext)_localctx).aux2.parametros;
-			        ((RestpartContext)_localctx).sentencias =  ((RestpartContext)_localctx).aux2.listaSent;
+			        ((RestpartContext)_localctx).bloque =  ((RestpartContext)_localctx).aux2.bloque;
 			    
 			}
 		}
@@ -397,7 +397,7 @@ public class gramaticaParser extends Parser {
 
 	public static class Aux2Context extends ParserRuleContext {
 		public ArrayList<Parametro> parametros;
-		public ArrayList<Sentencia> listaSent;
+		public Blq bloque;
 		public ListparamContext listparam;
 		public BlqContext blq;
 		public ListparamContext listparam() {
@@ -443,10 +443,10 @@ public class gramaticaParser extends Parser {
 				setState(82);
 				match(CERRAR_PARENTESIS);
 				setState(83);
-				((Aux2Context)_localctx).blq = blq();
+				((Aux2Context)_localctx).blq = blq(1);
 
 				        ((Aux2Context)_localctx).parametros =  ((Aux2Context)_localctx).listparam.lista;
-				        ((Aux2Context)_localctx).listaSent =  ((Aux2Context)_localctx).blq.sentencias;
+				        ((Aux2Context)_localctx).bloque =  ((Aux2Context)_localctx).blq.bloque;
 				    
 				}
 				break;
@@ -456,11 +456,11 @@ public class gramaticaParser extends Parser {
 				setState(86);
 				match(CERRAR_PARENTESIS);
 				setState(87);
-				((Aux2Context)_localctx).blq = blq();
+				((Aux2Context)_localctx).blq = blq(1);
 
 				        ((Aux2Context)_localctx).parametros =  new ArrayList<>(); //Tambien podemos poner puntero a null si da problemas al construir
 				                                         //y así vemos que si la lista de params es null es que no tiene ninguno
-				        ((Aux2Context)_localctx).listaSent =  ((Aux2Context)_localctx).blq.sentencias;
+				        ((Aux2Context)_localctx).bloque =  ((Aux2Context)_localctx).blq.bloque;
 				    
 				}
 				break;
@@ -702,15 +702,18 @@ public class gramaticaParser extends Parser {
 	}
 
 	public static class BlqContext extends ParserRuleContext {
-		public ArrayList<Sentencia> sentencias;
+		public int indent;
+		public Blq bloque;
 		public SentlistContext sentlist;
 		public TerminalNode INICIO() { return getToken(gramaticaParser.INICIO, 0); }
 		public SentlistContext sentlist() {
 			return getRuleContext(SentlistContext.class,0);
 		}
 		public TerminalNode FIN() { return getToken(gramaticaParser.FIN, 0); }
-		public BlqContext(ParserRuleContext parent, int invokingState) {
+		public BlqContext(ParserRuleContext parent, int invokingState) { super(parent, invokingState); }
+		public BlqContext(ParserRuleContext parent, int invokingState, int indent) {
 			super(parent, invokingState);
+			this.indent = indent;
 		}
 		@Override public int getRuleIndex() { return RULE_blq; }
 		@Override
@@ -728,8 +731,8 @@ public class gramaticaParser extends Parser {
 		}
 	}
 
-	public final BlqContext blq() throws RecognitionException {
-		BlqContext _localctx = new BlqContext(_ctx, getState());
+	public final BlqContext blq(int indent) throws RecognitionException {
+		BlqContext _localctx = new BlqContext(_ctx, getState(), indent);
 		enterRule(_localctx, 16, RULE_blq);
 		try {
 			enterOuterAlt(_localctx, 1);
@@ -737,12 +740,13 @@ public class gramaticaParser extends Parser {
 			setState(114);
 			match(INICIO);
 			setState(115);
-			((BlqContext)_localctx).sentlist = sentlist();
+			((BlqContext)_localctx).sentlist = sentlist(_localctx.indent);
 			setState(116);
 			match(FIN);
 
-			        ((BlqContext)_localctx).sentencias =  new ArrayList<>();
-			        ((BlqContext)_localctx).sentencias =  ((BlqContext)_localctx).sentlist.sentencias;
+			        ArrayList<Sentencia> sentencias = new ArrayList<>();
+			        sentencias = ((BlqContext)_localctx).sentlist.sentencias;
+			        ((BlqContext)_localctx).bloque =  new Blq(((BlqContext)_localctx).sentlist.sentencias,_localctx.indent);
 			    
 			}
 		}
@@ -758,6 +762,7 @@ public class gramaticaParser extends Parser {
 	}
 
 	public static class SentlistContext extends ParserRuleContext {
+		public int indent;
 		public ArrayList<Sentencia> sentencias;
 		public SentContext sent;
 		public SentlistAuxContext sentlistAux;
@@ -767,8 +772,10 @@ public class gramaticaParser extends Parser {
 		public SentlistAuxContext sentlistAux() {
 			return getRuleContext(SentlistAuxContext.class,0);
 		}
-		public SentlistContext(ParserRuleContext parent, int invokingState) {
+		public SentlistContext(ParserRuleContext parent, int invokingState) { super(parent, invokingState); }
+		public SentlistContext(ParserRuleContext parent, int invokingState, int indent) {
 			super(parent, invokingState);
+			this.indent = indent;
 		}
 		@Override public int getRuleIndex() { return RULE_sentlist; }
 		@Override
@@ -786,16 +793,16 @@ public class gramaticaParser extends Parser {
 		}
 	}
 
-	public final SentlistContext sentlist() throws RecognitionException {
-		SentlistContext _localctx = new SentlistContext(_ctx, getState());
+	public final SentlistContext sentlist(int indent) throws RecognitionException {
+		SentlistContext _localctx = new SentlistContext(_ctx, getState(), indent);
 		enterRule(_localctx, 18, RULE_sentlist);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(119);
-			((SentlistContext)_localctx).sent = sent();
+			((SentlistContext)_localctx).sent = sent(_localctx.indent+1);
 			setState(120);
-			((SentlistContext)_localctx).sentlistAux = sentlistAux();
+			((SentlistContext)_localctx).sentlistAux = sentlistAux(_localctx.indent+1);
 
 			        ((SentlistContext)_localctx).sentencias =  new ArrayList<>();
 			        _localctx.sentencias.add(((SentlistContext)_localctx).sent.sentencia);
@@ -815,6 +822,7 @@ public class gramaticaParser extends Parser {
 	}
 
 	public static class SentlistAuxContext extends ParserRuleContext {
+		public int indent;
 		public ArrayList<Sentencia> sentencias;
 		public SentContext sent;
 		public SentlistAuxContext sentlistAux;
@@ -824,8 +832,10 @@ public class gramaticaParser extends Parser {
 		public SentlistAuxContext sentlistAux() {
 			return getRuleContext(SentlistAuxContext.class,0);
 		}
-		public SentlistAuxContext(ParserRuleContext parent, int invokingState) {
+		public SentlistAuxContext(ParserRuleContext parent, int invokingState) { super(parent, invokingState); }
+		public SentlistAuxContext(ParserRuleContext parent, int invokingState, int indent) {
 			super(parent, invokingState);
+			this.indent = indent;
 		}
 		@Override public int getRuleIndex() { return RULE_sentlistAux; }
 		@Override
@@ -843,8 +853,8 @@ public class gramaticaParser extends Parser {
 		}
 	}
 
-	public final SentlistAuxContext sentlistAux() throws RecognitionException {
-		SentlistAuxContext _localctx = new SentlistAuxContext(_ctx, getState());
+	public final SentlistAuxContext sentlistAux(int indent) throws RecognitionException {
+		SentlistAuxContext _localctx = new SentlistAuxContext(_ctx, getState(), indent);
 		enterRule(_localctx, 20, RULE_sentlistAux);
 		try {
 			setState(128);
@@ -863,9 +873,9 @@ public class gramaticaParser extends Parser {
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(123);
-				((SentlistAuxContext)_localctx).sent = sent();
+				((SentlistAuxContext)_localctx).sent = sent(_localctx.indent);
 				setState(124);
-				((SentlistAuxContext)_localctx).sentlistAux = sentlistAux();
+				((SentlistAuxContext)_localctx).sentlistAux = sentlistAux(_localctx.indent);
 
 				        ((SentlistAuxContext)_localctx).sentencias =  new ArrayList<>();
 				        _localctx.sentencias.add(((SentlistAuxContext)_localctx).sent.sentencia);
@@ -897,6 +907,7 @@ public class gramaticaParser extends Parser {
 	}
 
 	public static class SentContext extends ParserRuleContext {
+		public int indent;
 		public Sentencia sentencia;
 		public TypeContext type;
 		public LidContext lid;
@@ -965,8 +976,10 @@ public class gramaticaParser extends Parser {
 		public TerminalNode BUCLEMIENTRAS() { return getToken(gramaticaParser.BUCLEMIENTRAS, 0); }
 		public TerminalNode BUCLE() { return getToken(gramaticaParser.BUCLE, 0); }
 		public TerminalNode HASTA() { return getToken(gramaticaParser.HASTA, 0); }
-		public SentContext(ParserRuleContext parent, int invokingState) {
+		public SentContext(ParserRuleContext parent, int invokingState) { super(parent, invokingState); }
+		public SentContext(ParserRuleContext parent, int invokingState, int indent) {
 			super(parent, invokingState);
+			this.indent = indent;
 		}
 		@Override public int getRuleIndex() { return RULE_sent; }
 		@Override
@@ -984,8 +997,8 @@ public class gramaticaParser extends Parser {
 		}
 	}
 
-	public final SentContext sent() throws RecognitionException {
-		SentContext _localctx = new SentContext(_ctx, getState());
+	public final SentContext sent(int indent) throws RecognitionException {
+		SentContext _localctx = new SentContext(_ctx, getState(), indent);
 		enterRule(_localctx, 22, RULE_sent);
 		try {
 			setState(187);
@@ -1064,13 +1077,13 @@ public class gramaticaParser extends Parser {
 				setState(152);
 				match(ENTONCES);
 				setState(153);
-				((SentContext)_localctx).blq1 = blq();
+				((SentContext)_localctx).blq1 = blq(_localctx.indent);
 				setState(154);
 				match(SINO);
 				setState(155);
-				((SentContext)_localctx).blq2 = blq();
+				((SentContext)_localctx).blq2 = blq(_localctx.indent);
 
-				            ((SentContext)_localctx).sentencia =  new Bifurcacion(((SentContext)_localctx).lcond.listaConds,((SentContext)_localctx).blq1.sentencias,((SentContext)_localctx).blq2.sentencias);
+				            ((SentContext)_localctx).sentencia =  new Bifurcacion(((SentContext)_localctx).lcond.listaConds,((SentContext)_localctx).blq1.bloque,((SentContext)_localctx).blq2.bloque);
 				        
 				}
 				break;
@@ -1102,7 +1115,7 @@ public class gramaticaParser extends Parser {
 				setState(169);
 				match(CERRAR_PARENTESIS);
 				setState(170);
-				((SentContext)_localctx).blq = blq();
+				((SentContext)_localctx).blq = blq(_localctx.indent);
 
 				            /*String ident1 = (((SentContext)_localctx).id1!=null?((SentContext)_localctx).id1.getText():null);
 				            String asi1 = ((SentContext)_localctx).asig1.s;
@@ -1111,10 +1124,10 @@ public class gramaticaParser extends Parser {
 				            String asi2 = ((SentContext)_localctx).asig2.s;
 				            Asignacion asig2 = new Asignacion(ident2,asi2,((SentContext)_localctx).exp2.expresion);
 
-				            ((SentContext)_localctx).sentencia =  new BuclePara(asig1,((SentContext)_localctx).lcond.listaConds,asig2,((SentContext)_localctx).blq.sentencias);
+				            ((SentContext)_localctx).sentencia =  new BuclePara(asig1,((SentContext)_localctx).lcond.listaConds,asig2,((SentContext)_localctx).blq.bloque);
 				            */
 
-				            ((SentContext)_localctx).sentencia =  new BuclePara((((SentContext)_localctx).id1!=null?((SentContext)_localctx).id1.getText():null),((SentContext)_localctx).asig1.s,((SentContext)_localctx).exp1.expresion,((SentContext)_localctx).lcond.listaConds,(((SentContext)_localctx).id2!=null?((SentContext)_localctx).id2.getText():null),((SentContext)_localctx).asig2.s,((SentContext)_localctx).exp2.expresion,((SentContext)_localctx).blq.sentencias);
+				            ((SentContext)_localctx).sentencia =  new BuclePara((((SentContext)_localctx).id1!=null?((SentContext)_localctx).id1.getText():null),((SentContext)_localctx).asig1.s,((SentContext)_localctx).exp1.expresion,((SentContext)_localctx).lcond.listaConds,(((SentContext)_localctx).id2!=null?((SentContext)_localctx).id2.getText():null),((SentContext)_localctx).asig2.s,((SentContext)_localctx).exp2.expresion,((SentContext)_localctx).blq.bloque);
 				        
 				}
 				break;
@@ -1130,7 +1143,7 @@ public class gramaticaParser extends Parser {
 				setState(176);
 				match(CERRAR_PARENTESIS);
 				setState(177);
-				blq();
+				blq(_localctx.indent);
 				}
 				break;
 			case 8:
@@ -1139,7 +1152,7 @@ public class gramaticaParser extends Parser {
 				setState(179);
 				match(BUCLE);
 				setState(180);
-				blq();
+				blq(_localctx.indent);
 				setState(181);
 				match(HASTA);
 				setState(182);
@@ -1154,7 +1167,7 @@ public class gramaticaParser extends Parser {
 				enterOuterAlt(_localctx, 9);
 				{
 				setState(186);
-				blq();
+				blq(_localctx.indent);
 				}
 				break;
 			}
