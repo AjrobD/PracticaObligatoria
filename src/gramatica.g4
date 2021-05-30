@@ -83,6 +83,7 @@ aux1 returns [ArrayList<Part> partes]:
     part aux1 {
         $partes = new ArrayList<Part>();
         $partes.add($part.parte);
+        $partes.addAll($aux1.partes);
     }
     | {
         //Primera que se ejecuta, fin de la recursividad
@@ -184,7 +185,7 @@ sent returns [Sentencia sentencia]:
             $sentencia = new Bifurcacion($lcond.listaConds,$blq1.sentencias,$blq2.sentencias);
         }
         | BUCLEPARA ABRIR_PARENTESIS id1=IDENTIFICADOR asig1=asig exp1=exp PUNTO_Y_COMA lcond PUNTO_Y_COMA id2=IDENTIFICADOR asig2=asig exp2=exp CERRAR_PARENTESIS blq{
-            String ident1 = $id1.text;
+            /*String ident1 = $id1.text;
             String asi1 = $asig1.s;
             Asignacion asig1 = new Asignacion(ident1,asi1,$exp1.expresion);
             String ident2 = $id2.text;
@@ -192,7 +193,9 @@ sent returns [Sentencia sentencia]:
             Asignacion asig2 = new Asignacion(ident2,asi2,$exp2.expresion);
 
             $sentencia = new BuclePara(asig1,$lcond.listaConds,asig2,$blq.sentencias);
+            */
 
+            $sentencia = new BuclePara($id1.text,$asig1.s,$exp1.expresion,$lcond.listaConds,$id2.text,$asig2.s,$exp2.expresion,$blq.sentencias);
         }
         | BUCLEMIENTRAS ABRIR_PARENTESIS lcond CERRAR_PARENTESIS blq
         | BUCLE blq HASTA ABRIR_PARENTESIS lcond CERRAR_PARENTESIS

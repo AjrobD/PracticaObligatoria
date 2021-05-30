@@ -1,4 +1,4 @@
-// Generated from C:/Users/Mario/Desktop/PracticaObligatoria/src\gramatica.g4 by ANTLR 4.9.1
+// Generated from C:/Users/Usuario/Desktop/URJC/Segundo Cuatrimestre/AIS/Tema 3/PracticaObligatoria/src\gramatica.g4 by ANTLR 4.9.1
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -183,6 +183,7 @@ public class gramaticaParser extends Parser {
 	public static class Aux1Context extends ParserRuleContext {
 		public ArrayList<Part> partes;
 		public PartContext part;
+		public Aux1Context aux1;
 		public PartContext part() {
 			return getRuleContext(PartContext.class,0);
 		}
@@ -222,10 +223,11 @@ public class gramaticaParser extends Parser {
 				setState(58);
 				((Aux1Context)_localctx).part = part();
 				setState(59);
-				aux1();
+				((Aux1Context)_localctx).aux1 = aux1();
 
 				        ((Aux1Context)_localctx).partes =  new ArrayList<Part>();
 				        _localctx.partes.add(((Aux1Context)_localctx).part.parte);
+				        _localctx.partes.addAll(((Aux1Context)_localctx).aux1.partes);
 				    
 				}
 				break;
@@ -1102,7 +1104,7 @@ public class gramaticaParser extends Parser {
 				setState(170);
 				((SentContext)_localctx).blq = blq();
 
-				            String ident1 = (((SentContext)_localctx).id1!=null?((SentContext)_localctx).id1.getText():null);
+				            /*String ident1 = (((SentContext)_localctx).id1!=null?((SentContext)_localctx).id1.getText():null);
 				            String asi1 = ((SentContext)_localctx).asig1.s;
 				            Asignacion asig1 = new Asignacion(ident1,asi1,((SentContext)_localctx).exp1.expresion);
 				            String ident2 = (((SentContext)_localctx).id2!=null?((SentContext)_localctx).id2.getText():null);
@@ -1110,7 +1112,9 @@ public class gramaticaParser extends Parser {
 				            Asignacion asig2 = new Asignacion(ident2,asi2,((SentContext)_localctx).exp2.expresion);
 
 				            ((SentContext)_localctx).sentencia =  new BuclePara(asig1,((SentContext)_localctx).lcond.listaConds,asig2,((SentContext)_localctx).blq.sentencias);
+				            */
 
+				            ((SentContext)_localctx).sentencia =  new BuclePara((((SentContext)_localctx).id1!=null?((SentContext)_localctx).id1.getText():null),((SentContext)_localctx).asig1.s,((SentContext)_localctx).exp1.expresion,((SentContext)_localctx).lcond.listaConds,(((SentContext)_localctx).id2!=null?((SentContext)_localctx).id2.getText():null),((SentContext)_localctx).asig2.s,((SentContext)_localctx).exp2.expresion,((SentContext)_localctx).blq.sentencias);
 				        
 				}
 				break;

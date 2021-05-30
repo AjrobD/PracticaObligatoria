@@ -13,14 +13,23 @@ public class CondicionExpr extends Condicion {
 
     @Override
     public String toString() {
-        String parte = "";
-        for(Varios v: izq){
-            parte += v.toString();
+        String condicion = "";
+        int contador = 0;
+        for(Varios varioIzq : izq){
+            contador++;
+            condicion += varioIzq.toString();
+            if(contador< izq.size()){
+                condicion+=" ";
+            }
         }
-        parte += this.comp;
-        for(Varios v: der) {
-            parte += v.toString();
+        condicion += " "+comp+" ";
+        for(Varios varioDer : der){
+            contador++;
+            condicion += varioDer.toString();
+            if(contador< der.size()){
+                condicion+=" ";
+            }
         }
-        return parte;
+        return condicion;
     }
 }

@@ -17,7 +17,7 @@ public class Bifurcacion extends Sentencia{
         parte += "<SPAN CLASS='palres'>";
         parte += "bifurcacion";
         parte += "</SPAN> (";
-        parte+= listaCond+" )</br>";
+        parte += listaCond+" )</br>";
         parte += "<SPAN CLASS='palres'>entonces</SPAN><BR/>";
         parte += "<SPAN CLASS='palres'>inicio</SPAN><BR/>";
         for(Sentencia sentencia: blq1){
