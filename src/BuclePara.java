@@ -27,7 +27,8 @@ public class BuclePara extends Sentencia{
         parte += "<SPAN CLASS='palres'>";
         parte += "buclepara";
         parte += "</SPAN> (";
-        parte += "<A HREF='#"+id1+"'>"+id1+"</A>";
+        //parte += "<A HREF='#"+id1+"'>"+id1+"</A>";
+        parte += "<SPAN CLASS='ident'>"+id1+"</SPAN>";
         parte += asig1;
         int contador = 0;
         for(Varios vario : exp1){
@@ -41,7 +42,8 @@ public class BuclePara extends Sentencia{
         parte+="; ";
         parte+=listaConds+"; ";
 
-        parte += "<A HREF='#"+id2+"'>"+id2+"</A>";
+        //parte += "<A HREF='#"+id2+"'>"+id2+"</A>";
+        parte += "<SPAN CLASS='ident'>"+id2+"</SPAN>";
         parte += asig2;
         contador = 0;
         for(Varios vario : exp2){

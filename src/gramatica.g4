@@ -2,6 +2,7 @@ grammar gramatica;
 
 @parser::members {
     private Program programa;
+    private double ident;
 
     public gramaticaParser(TokenStream input, Program thePrograma){
         this(input);
@@ -74,6 +75,7 @@ COMILLA_SIMPLE: ('\'\''|~['])+;
 
 program:
     part aux1{
+        ident = 0.5;
         Part parte = $part.parte;
         ArrayList<Part> partes = $aux1.partes;
         Program programa = new Program(parte,partes);
