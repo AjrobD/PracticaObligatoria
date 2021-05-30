@@ -6,7 +6,7 @@ inicio
 	return resultado;
 fin
 
-procedimiento intercambioEntero ( entero v1, entero v2)
+procedimiento intercambioEntero ( entero v1, entero v2 )
 inicio
 	entero aux;
 	aux = 0;

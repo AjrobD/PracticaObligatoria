@@ -31,5 +31,6 @@ public class Bifurcacion extends Sentencia{
         }
         parte += "<SPAN CLASS='palres'>fin</SPAN><BR/>";
         return parte;
+
     }
 }
