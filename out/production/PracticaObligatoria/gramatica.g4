@@ -78,7 +78,7 @@ program:
         ArrayList<Part> partes = $aux1.partes;
         Program programa = new Program(parte,partes);
         System.out.println(programa.toString());
-    }; //Aquí tendríamos solo que crear el objeto de tipo program y hacer un print
+    }; 
 aux1 returns [ArrayList<Part> partes]:
     part aux1 {
         $partes = new ArrayList<Part>();
@@ -175,13 +175,25 @@ sent returns [Sentencia sentencia]:
         | IDENTIFICADOR aux3Prima{
             String ident = $IDENTIFICADOR.text;
             ArrayList<Varios> aux3Pr = $aux3Prima.funcion;
-            $sentencia = new LLamada(ident,aux3Pr); //Asignacion extends Sentencia
+            $sentencia = new LLamada(ident,aux3Pr); //Llamada extends Sentencia
         }
         | RETURN exp PUNTO_Y_COMA{
             $sentencia = new Return($exp.expresion);//Return extends sentencia
+        }//Ahora para diferenciar usamos labels
+        | BIFURCACION ABRIR_PARENTESIS lcond CERRAR_PARENTESIS ENTONCES blq1=blq SINO blq2=blq{
+            $sentencia = new Bifurcacion($lcond.listaConds,$blq1.sentencias,$blq2.sentencias);
         }
-        | BIFURCACION ABRIR_PARENTESIS lcond CERRAR_PARENTESIS ENTONCES blq SINO blq
-        | BUCLEPARA ABRIR_PARENTESIS IDENTIFICADOR asig exp PUNTO_Y_COMA lcond PUNTO_Y_COMA IDENTIFICADOR asig exp CERRAR_PARENTESIS blq
+        | BUCLEPARA ABRIR_PARENTESIS id1=IDENTIFICADOR asig1=asig exp1=exp PUNTO_Y_COMA lcond PUNTO_Y_COMA id2=IDENTIFICADOR asig2=asig exp2=exp CERRAR_PARENTESIS blq{
+            String ident1 = $id1.text;
+            String asi1 = $asig1.s;
+            Asignacion asig1 = new Asignacion(ident1,asi1,$exp1.expresion);
+            String ident2 = $id2.text;
+            String asi2 = $asig2.s;
+            Asignacion asig2 = new Asignacion(ident2,asi2,$exp2.expresion);
+
+            $sentencia = new BuclePara(asig1,$lcond.listaConds,asig2,$blq.sentencias);
+
+        }
         | BUCLEMIENTRAS ABRIR_PARENTESIS lcond CERRAR_PARENTESIS blq
         | BUCLE blq HASTA ABRIR_PARENTESIS lcond CERRAR_PARENTESIS
         | blq ;
@@ -323,19 +335,57 @@ op returns [String operacion]:
     };
 
 //parte opcional
-lcond : cond lcondAux
-        | NO cond;
-lcondAux : opl lcond lcondAux | ;
-cond : exp opr exp
-        | CIERTO
-        | FALSO;
-opl : Y
-    | O;
-opr: IGUAL_IGUAL
-    | DISTINTO
-    | MENOR
-    | MAYOR
-    | MAYOR_IGUAL
-    | MENOR_IGUAL;
+//Como las palabras reservadas se tratan como string planos en el html, podemos trabajar como si
+//lcond fuera un string, para luego imprimirlo.
+lcond returns[String listaConds] :
+        cond lcondAux{
+            $listaConds = $cond.condicion.toString() + $lcondAux.listConds;
+        }
+        | NO cond{
+            $listaConds = "no" + $cond.condicion.toString();
+        };
+lcondAux returns[String listConds]:
+        opl lcond lcondAux{
+            $listConds = $opl.comlog + $lcond.listaConds + $lcondAux.listConds;
+        }
+        |{
+            $listConds = "";
+        } ;
+cond returns [Condicion condicion]: //añadimos labels para ver a que nos referimos
+        e1=exp opr e2=exp{
+            $condicion = new CondicionExpr($e1.expresion,$opr.comparacion,$e2.expresion);
+        }
+        | CIERTO{
+            $condicion = new CondicionLiteral("cierto");
+        }
+        | FALSO{
+            $condicion = new CondicionLiteral("falso");
+        };
+opl returns [String comlog] :
+    Y{
+        $comlog = "y";
+    }
+    | O{
+        $comlog = "o";
+    };
+opr returns [String comparacion]:
+    IGUAL_IGUAL{
+        $comparacion = "==";
+    }
+    | DISTINTO{
+        $comparacion = "<>";
+    }
+    | MENOR{
+        $comparacion = "<";
+    }
+    | MAYOR{
+        $comparacion = ">";
+    }
+    | MAYOR_IGUAL{
+        $comparacion = ">=";
+    }
+    | MENOR_IGUAL{
+         $comparacion = "<=";
+    };
 
 WHITESPACE : ( '\t' | ' ' | '\r' | '\n'| '\u000C' )+ -> skip;

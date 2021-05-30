@@ -13,6 +13,23 @@ public class Bifurcacion extends Sentencia{
 
     @Override
     public String toString() {
-        return null;
+        String parte="";
+        parte += "<SPAN CLASS='palres'>";
+        parte += "bifurcacion";
+        parte += "</SPAN> (";
+        parte+= listaCond+" )</br>";
+        parte += "<SPAN CLASS='palres'>entonces</SPAN><BR/>";
+        parte += "<SPAN CLASS='palres'>inicio</SPAN><BR/>";
+        for(Sentencia sentencia: blq1){
+            parte += sentencia.toString();
+        }
+        parte += "<SPAN CLASS='palres'>fin</SPAN><BR/>";
+        parte += "<SPAN CLASS='palres'>sino</SPAN><BR/>";
+        parte += "<SPAN CLASS='palres'>inicio</SPAN><BR/>";
+        for(Sentencia sentencia: blq2){
+            parte += sentencia.toString();
+        }
+        parte += "<SPAN CLASS='palres'>fin</SPAN><BR/>";
+        return parte;
     }
 }
