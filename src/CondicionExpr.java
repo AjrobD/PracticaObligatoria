@@ -13,7 +13,14 @@ public class CondicionExpr extends Condicion {
 
     @Override
     public String toString() {
-        //AUN NO IMPLEMENTADO -> como tratamos para imprimir arrayList de varios
-        return izq.toString() + comp + der.toString();
+        String parte = "";
+        for(Varios v: izq){
+            parte += v.toString();
+        }
+        parte += this.comp;
+        for(Varios v: der) {
+            parte += v.toString();
+        }
+        return parte;
     }
 }
