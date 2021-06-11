@@ -52,8 +52,10 @@ MAYOR_IGUAL: '>=';
 MENOR_IGUAL: '<=';
 
 //constantes numericas
-CONSTENTERO: [+-]?([0-9]+|'$'[0-9A-F]+);
-CONSTREAL: [+-]?([0-9]+'.'[0-9]+|'$'[0-9A-F]+'.'[0-9A-F]+);
+
+CONSTENTERO: ('$'[+-]?[0-9A-F]+| [+-]?[0-9]+);
+CONSTREAL: ('$'[+-]?[0-9A-F]+'.'[0-9A-F]+| [+-]?[0-9]+'.'[0-9]+);
+
 
 IDENTIFICADOR: [_a-z]+[a-zA-Z0-9()_]*;
 

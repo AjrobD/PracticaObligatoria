@@ -7,7 +7,7 @@ funcion real mayor ( real num1 , real num2 ) inicio
 fin
 
 funcion real fct2 ( real numero , entero maximo ) inicio
-    var1 = 3.4 ;
+    var1 = $+3A.4C ;
     buclepara ( i = 0 ; i < maximo ; i = i + 1 ) inicio
         numero = numero + i ;
     fin
