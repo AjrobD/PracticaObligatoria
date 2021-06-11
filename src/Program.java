@@ -20,7 +20,7 @@ public class Program {
         for(Part parte : partes){
             String cabecera = parte.getCabecera();
             String nombre = parte.getNombre();
-            pagina += "<LI>" + "<A HREF = '" + nombre + "'>" + cabecera;
+            pagina += "<LI>" + "<A HREF = '#" + nombre + "'>" + cabecera;
         }
         pagina += "</UL> \n";
         pagina += "\n";
