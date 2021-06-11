@@ -57,9 +57,8 @@ CONSTREAL: [+-]?([0-9]+'.'[0-9]+|'$'[0-9A-F]+'.'[0-9A-F]+);
 
 IDENTIFICADOR: [_a-z]+[a-zA-Z0-9()_]*;
 
-//comentarios
-LINE_COMENT: '%%'STUFF'\n';
-MULTI_COMENT: '%-' (~[-]|'-'~[%])* '-%';
+//Comentarios
+IGNORE : ( '%-' .*? '-%' | '%%' ~[\n]* '\n' | .) -> skip;
 
 CONSTLIT: ('"' COMILLA_DOBLE '"'|'\'' COMILLA_SIMPLE '\'');
 
@@ -377,4 +376,3 @@ opr returns [String comparacion]:
     };
 
 WHITESPACE : ( '\t' | ' ' | '\r' | '\n'| '\u000C' )+ -> skip;
-COMENTARIOS : (LINE_COMENT|MULTI_COMENT)+ -> skip;
