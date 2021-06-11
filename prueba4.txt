@@ -2,13 +2,34 @@ procedimiento fct3 9 ( entero argumento ) inicio
     entero i , j , suma ;
     i = 0 ;
     suma = 0;
-    bucle inicio
-        j = 0 ;
-        bucle inicio
+    buclepara ( i=0 ; i >= 2 ; i = i + 1 )
+    inicio
+        buclepara (j = 0 ; j >= 2 ; j = j + 1 )
+        inicio
             suma += j ;
             j += 1 ;
-        fin hasta ( j >=2 )
+        fin
         i += 1 ;
-    fin hasta ( i >= 2 )
+    fin
     argumento += suma ;
+fin
+
+funcion real promedio ( entero argumento1, entero argumento2 )
+inicio
+	entero suma;
+	suma = argumento1 + argumento2;
+	entero promedio;
+	promedio = suma / 2;
+	return promedio;
+
+fin
+
+funcion real areaCirculo ( real radio )
+inicio
+	real resultado;
+	resultado = 0.0;
+	real pi;
+	pi = 3.14;
+	resultado = radio * radio * pi;
+	return resultado;
 fin
