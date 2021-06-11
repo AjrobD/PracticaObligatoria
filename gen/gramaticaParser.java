@@ -1,4 +1,4 @@
-// Generated from C:/Users/Usuario/Desktop/URJC/Segundo Cuatrimestre/Procesadores de Lenguajes/PracticaObligatoria/src\gramatica.g4 by ANTLR 4.9.1
+// Generated from C:/Users/Mario/Desktop/PracticaObligatoria/src\gramatica.g4 by ANTLR 4.9.1
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -23,7 +23,8 @@ public class gramaticaParser extends Parser {
 		SINO=24, BUCLEPARA=25, BUCLEMIENTRAS=26, BUCLE=27, HASTA=28, NO=29, CIERTO=30, 
 		FALSO=31, Y=32, O=33, IGUAL_IGUAL=34, DISTINTO=35, MENOR=36, MAYOR=37, 
 		MAYOR_IGUAL=38, MENOR_IGUAL=39, CONSTENTERO=40, CONSTREAL=41, IDENTIFICADOR=42, 
-		LINE_COMENT=43, MULTI_COMENT=44, CONSTLIT=45, WHITESPACE=46, COMENTARIOS=47;
+		LINE_COMENT=43, MULTI_COMENT=44, IGNORE=45, CONSTLIT=46, WHITESPACE=47, 
+		COMENTARIOS=48;
 	public static final int
 		RULE_program = 0, RULE_aux1 = 1, RULE_part = 2, RULE_restpart = 3, RULE_aux2 = 4, 
 		RULE_listparam = 5, RULE_listparamAux = 6, RULE_type = 7, RULE_blq = 8, 
@@ -61,7 +62,7 @@ public class gramaticaParser extends Parser {
 			"SINO", "BUCLEPARA", "BUCLEMIENTRAS", "BUCLE", "HASTA", "NO", "CIERTO", 
 			"FALSO", "Y", "O", "IGUAL_IGUAL", "DISTINTO", "MENOR", "MAYOR", "MAYOR_IGUAL", 
 			"MENOR_IGUAL", "CONSTENTERO", "CONSTREAL", "IDENTIFICADOR", "LINE_COMENT", 
-			"MULTI_COMENT", "CONSTLIT", "WHITESPACE", "COMENTARIOS"
+			"MULTI_COMENT", "IGNORE", "CONSTLIT", "WHITESPACE", "COMENTARIOS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -2428,7 +2429,7 @@ public class gramaticaParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\61\u014e\4\2\t\2"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\62\u014e\4\2\t\2"+
 		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
 		"\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+
@@ -2509,8 +2510,8 @@ public class gramaticaParser extends Parser {
 		"&\24\2\u00f0\u00f1\7\6\2\2\u00f1\u00f2\5(\25\2\u00f2\u00f3\b\24\1\2\u00f3"+
 		"\u0101\3\2\2\2\u00f4\u00f5\7*\2\2\u00f5\u00f6\5(\25\2\u00f6\u00f7\b\24"+
 		"\1\2\u00f7\u0101\3\2\2\2\u00f8\u00f9\7+\2\2\u00f9\u00fa\5(\25\2\u00fa"+
-		"\u00fb\b\24\1\2\u00fb\u0101\3\2\2\2\u00fc\u00fd\7/\2\2\u00fd\u00fe\5("+
-		"\25\2\u00fe\u00ff\b\24\1\2\u00ff\u0101\3\2\2\2\u0100\u00e9\3\2\2\2\u0100"+
+		"\u00fb\b\24\1\2\u00fb\u0101\3\2\2\2\u00fc\u00fd\7\60\2\2\u00fd\u00fe\5"+
+		"(\25\2\u00fe\u00ff\b\24\1\2\u00ff\u0101\3\2\2\2\u0100\u00e9\3\2\2\2\u0100"+
 		"\u00ee\3\2\2\2\u0100\u00f4\3\2\2\2\u0100\u00f8\3\2\2\2\u0100\u00fc\3\2"+
 		"\2\2\u0101\'\3\2\2\2\u0102\u0103\5,\27\2\u0103\u0104\5&\24\2\u0104\u0105"+
 		"\5(\25\2\u0105\u0106\b\25\1\2\u0106\u0109\3\2\2\2\u0107\u0109\b\25\1\2"+
