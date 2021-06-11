@@ -25,7 +25,7 @@ public class LLamada extends Sentencia{
             }
         }
 
-        sentencia += ";</DIV>";
+        sentencia += "</DIV>";
         return sentencia;
     }
 }

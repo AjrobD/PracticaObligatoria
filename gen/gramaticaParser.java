@@ -1,4 +1,4 @@
-// Generated from C:/Users/Usuario/Desktop/URJC/Segundo Cuatrimestre/AIS/Tema 3/PracticaObligatoria/src\gramatica.g4 by ANTLR 4.9.1
+// Generated from C:/Users/Usuario/Desktop/URJC/Segundo Cuatrimestre/Procesadores de Lenguajes/PracticaObligatoria/src\gramatica.g4 by ANTLR 4.9.1
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -23,7 +23,7 @@ public class gramaticaParser extends Parser {
 		SINO=24, BUCLEPARA=25, BUCLEMIENTRAS=26, BUCLE=27, HASTA=28, NO=29, CIERTO=30, 
 		FALSO=31, Y=32, O=33, IGUAL_IGUAL=34, DISTINTO=35, MENOR=36, MAYOR=37, 
 		MAYOR_IGUAL=38, MENOR_IGUAL=39, CONSTENTERO=40, CONSTREAL=41, IDENTIFICADOR=42, 
-		LINE_COMENT=43, MULTI_COMENT=44, CONSTLIT=45, WHITESPACE=46;
+		LINE_COMENT=43, MULTI_COMENT=44, CONSTLIT=45, WHITESPACE=46, COMENTARIOS=47;
 	public static final int
 		RULE_program = 0, RULE_aux1 = 1, RULE_part = 2, RULE_restpart = 3, RULE_aux2 = 4, 
 		RULE_listparam = 5, RULE_listparamAux = 6, RULE_type = 7, RULE_blq = 8, 
@@ -61,7 +61,7 @@ public class gramaticaParser extends Parser {
 			"SINO", "BUCLEPARA", "BUCLEMIENTRAS", "BUCLE", "HASTA", "NO", "CIERTO", 
 			"FALSO", "Y", "O", "IGUAL_IGUAL", "DISTINTO", "MENOR", "MAYOR", "MAYOR_IGUAL", 
 			"MENOR_IGUAL", "CONSTENTERO", "CONSTREAL", "IDENTIFICADOR", "LINE_COMENT", 
-			"MULTI_COMENT", "CONSTLIT", "WHITESPACE"
+			"MULTI_COMENT", "CONSTLIT", "WHITESPACE", "COMENTARIOS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -458,8 +458,7 @@ public class gramaticaParser extends Parser {
 				setState(87);
 				((Aux2Context)_localctx).blq = blq(1);
 
-				        ((Aux2Context)_localctx).parametros =  new ArrayList<>(); //Tambien podemos poner puntero a null si da problemas al construir
-				                                         //y así vemos que si la lista de params es null es que no tiene ninguno
+				        ((Aux2Context)_localctx).parametros =  new ArrayList<>();
 				        ((Aux2Context)_localctx).bloque =  ((Aux2Context)_localctx).blq.bloque;
 				    
 				}
@@ -1116,16 +1115,6 @@ public class gramaticaParser extends Parser {
 				match(CERRAR_PARENTESIS);
 				setState(170);
 				((SentContext)_localctx).blq = blq(_localctx.indent);
-
-				            /*String ident1 = (((SentContext)_localctx).id1!=null?((SentContext)_localctx).id1.getText():null);
-				            String asi1 = ((SentContext)_localctx).asig1.s;
-				            Asignacion asig1 = new Asignacion(ident1,asi1,((SentContext)_localctx).exp1.expresion);
-				            String ident2 = (((SentContext)_localctx).id2!=null?((SentContext)_localctx).id2.getText():null);
-				            String asi2 = ((SentContext)_localctx).asig2.s;
-				            Asignacion asig2 = new Asignacion(ident2,asi2,((SentContext)_localctx).exp2.expresion);
-
-				            ((SentContext)_localctx).sentencia =  new BuclePara(asig1,((SentContext)_localctx).lcond.listaConds,asig2,((SentContext)_localctx).blq.bloque);
-				            */
 
 				            ((SentContext)_localctx).sentencia =  new BuclePara((((SentContext)_localctx).id1!=null?((SentContext)_localctx).id1.getText():null),((SentContext)_localctx).asig1.s,((SentContext)_localctx).exp1.expresion,((SentContext)_localctx).lcond.listaConds,(((SentContext)_localctx).id2!=null?((SentContext)_localctx).id2.getText():null),((SentContext)_localctx).asig2.s,((SentContext)_localctx).exp2.expresion,((SentContext)_localctx).blq.bloque);
 				        
@@ -2439,7 +2428,7 @@ public class gramaticaParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\60\u014e\4\2\t\2"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\61\u014e\4\2\t\2"+
 		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
 		"\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+

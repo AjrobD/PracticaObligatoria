@@ -9,5 +9,8 @@ funcion real fct2 ( real numero , caracter booleano ) inicio
             booleano = verdadero ;
         fin
         fct2 ( numero , booleano ) ;
+        %% comentario
+        %- comentario
+        multilinea -%
     fin
 fin

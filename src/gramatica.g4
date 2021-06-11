@@ -377,3 +377,4 @@ opr returns [String comparacion]:
     };
 
 WHITESPACE : ( '\t' | ' ' | '\r' | '\n'| '\u000C' )+ -> skip;
+COMENTARIOS : (LINE_COMENT|MULTI_COMENT)+ -> skip;
