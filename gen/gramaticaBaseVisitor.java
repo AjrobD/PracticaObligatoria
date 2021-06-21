@@ -1,4 +1,4 @@
-// Generated from C:/pl/PracticaObligatoria/src\gramatica.g4 by ANTLR 4.9.1
+// Generated from C:/Users/Mario/Desktop/PracticaObligatoria/src\gramatica.g4 by ANTLR 4.9.1
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 /**

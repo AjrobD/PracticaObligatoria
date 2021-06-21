@@ -57,10 +57,7 @@ CONSTENTERO: ('$'[+-]?[0-9A-F]+| [+-]?[0-9]+);
 CONSTREAL: ('$'[+-]?[0-9A-F]+'.'[0-9A-F]+| [+-]?[0-9]+'.'[0-9]+);
 
 
-IDENTIFICADOR: [_a-z]+[a-zA-Z0-9()_]*;
-
-//Comentarios
-IGNORE : ( '%-' .*? '-%' | '%%' ~[\n]* '\n' | .) -> skip;
+IDENTIFICADOR: [_a-zA-Z][a-zA-Z0-9_]*;
 
 CONSTLIT: ('"' COMILLA_DOBLE '"'|'\'' COMILLA_SIMPLE '\'');
 
@@ -72,6 +69,8 @@ COMILLA_DOBLE: ('""'|~["])+;
 fragment
 COMILLA_SIMPLE: ('\'\'' |~['])+;
 
+//Comentarios
+IGNORE : ( '%-' .*? '-%' | '%%' ~[\n]* '\n' | .) -> skip;
 
 program:
     part aux1{

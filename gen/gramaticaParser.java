@@ -1,4 +1,4 @@
-// Generated from C:/pl/PracticaObligatoria/src\gramatica.g4 by ANTLR 4.9.1
+// Generated from C:/Users/Mario/Desktop/PracticaObligatoria/src\gramatica.g4 by ANTLR 4.9.1
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -23,7 +23,7 @@ public class gramaticaParser extends Parser {
 		SINO=24, BUCLEPARA=25, BUCLEMIENTRAS=26, BUCLE=27, HASTA=28, NO=29, CIERTO=30, 
 		FALSO=31, Y=32, O=33, IGUAL_IGUAL=34, DISTINTO=35, MENOR=36, MAYOR=37, 
 		MAYOR_IGUAL=38, MENOR_IGUAL=39, CONSTENTERO=40, CONSTREAL=41, IDENTIFICADOR=42, 
-		IGNORE=43, CONSTLIT=44, WHITESPACE=45;
+		CONSTLIT=43, IGNORE=44, WHITESPACE=45;
 	public static final int
 		RULE_program = 0, RULE_aux1 = 1, RULE_part = 2, RULE_restpart = 3, RULE_aux2 = 4, 
 		RULE_listparam = 5, RULE_listparamAux = 6, RULE_type = 7, RULE_blq = 8, 
@@ -60,8 +60,8 @@ public class gramaticaParser extends Parser {
 			"MAS", "MENOS", "MULTIPLICACION", "DIVISION", "BIFURCACION", "ENTONCES", 
 			"SINO", "BUCLEPARA", "BUCLEMIENTRAS", "BUCLE", "HASTA", "NO", "CIERTO", 
 			"FALSO", "Y", "O", "IGUAL_IGUAL", "DISTINTO", "MENOR", "MAYOR", "MAYOR_IGUAL", 
-			"MENOR_IGUAL", "CONSTENTERO", "CONSTREAL", "IDENTIFICADOR", "IGNORE", 
-			"CONSTLIT", "WHITESPACE"
+			"MENOR_IGUAL", "CONSTENTERO", "CONSTREAL", "IDENTIFICADOR", "CONSTLIT", 
+			"IGNORE", "WHITESPACE"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -2509,7 +2509,7 @@ public class gramaticaParser extends Parser {
 		"&\24\2\u00f0\u00f1\7\6\2\2\u00f1\u00f2\5(\25\2\u00f2\u00f3\b\24\1\2\u00f3"+
 		"\u0101\3\2\2\2\u00f4\u00f5\7*\2\2\u00f5\u00f6\5(\25\2\u00f6\u00f7\b\24"+
 		"\1\2\u00f7\u0101\3\2\2\2\u00f8\u00f9\7+\2\2\u00f9\u00fa\5(\25\2\u00fa"+
-		"\u00fb\b\24\1\2\u00fb\u0101\3\2\2\2\u00fc\u00fd\7.\2\2\u00fd\u00fe\5("+
+		"\u00fb\b\24\1\2\u00fb\u0101\3\2\2\2\u00fc\u00fd\7-\2\2\u00fd\u00fe\5("+
 		"\25\2\u00fe\u00ff\b\24\1\2\u00ff\u0101\3\2\2\2\u0100\u00e9\3\2\2\2\u0100"+
 		"\u00ee\3\2\2\2\u0100\u00f4\3\2\2\2\u0100\u00f8\3\2\2\2\u0100\u00fc\3\2"+
 		"\2\2\u0101\'\3\2\2\2\u0102\u0103\5,\27\2\u0103\u0104\5&\24\2\u0104\u0105"+

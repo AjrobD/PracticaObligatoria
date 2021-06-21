@@ -34,9 +34,19 @@ funcion entero factorialIt ( entero valorIt )
 inicio
 	entero contador, acumulador;
 	acumulador = 1;
+	acumulador2 = 1;
 	buclepara ( contador=0 ; contador == valorIt ; contador = contador + 1 )
 	inicio
 		acumulador = acumulador * contador;
+		buclepara ( contador2=0 ; contador2 == valorIt ; contador2 = contador2 + 1 )
+        	inicio
+        		acumulador2 = acumulador2 * contador;
+        	fin
 	fin
 	return acumulador;
 fin
+
+
+
+
+
